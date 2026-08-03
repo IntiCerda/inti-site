@@ -1,0 +1,68 @@
+---
+import Base from "../layouts/Base.astro";
+import { projects } from "../data/site";
+---
+
+<Base
+  title="Work — Inti Cerda"
+  description="Selected projects: a 16-service media intelligence platform, a compliance product, a public-sector dashboard and open-source tooling."
+>
+  <section class="pagehead">
+    <p class="pagehead__eyebrow">Work</p>
+    <h1>Five projects, one habit: ship the whole chain.</h1>
+    <p class="pagehead__body">
+      Client work, a commercial product and open source. Where a repository is
+      private, the architecture is documented publicly instead.
+    </p>
+  </section>
+
+  <section>
+    <p class="section__label">Selected projects</p>
+    <div class="cards">
+      {
+        projects.map((project) => (
+          <article class="card reveal">
+            <h2>{project.name}</h2>
+            <p class="card__meta">
+              {project.meta} · {project.kind}
+            </p>
+            <p class="card__body">{project.body}</p>
+            <p class="card__role">{project.role}</p>
+            <ul class="tags">
+              {project.tags.map((tag) => (
+                <li class="tag">{tag}</li>
+              ))}
+            </ul>
+            {project.links.length > 0 && (
+              <p class="card__links">
+                {project.links.map((link) => (
+                  <a class="btn" href={link.href}>
+                    {link.label} →
+                  </a>
+                ))}
+              </p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <p class="section__label">Contact</p>
+    <div class="panel reveal">
+      <h2>Building something that needs a backend?</h2>
+      <p class="pagehead__body">
+        Available for freelance and contract work, remote, UTC-4.
+      </p>
+      <div class="actions" style="margin-top:2rem">
+        <a class="btn btn--solid" href="mailto:inti.cerda.r@gmail.com">
+          inti.cerda.r@gmail.com
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/inti-cerda/">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

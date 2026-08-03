@@ -1,0 +1,80 @@
+---
+import Base from "../layouts/Base.astro";
+import { stack } from "../data/site";
+---
+
+<Base
+  title="Stack — Inti Cerda"
+  description="Languages, backend frameworks, frontend, AI tooling and infrastructure used in production."
+>
+  <section class="pagehead">
+    <p class="pagehead__eyebrow">Stack</p>
+    <h1>Tools I have shipped with, not tools I have read about.</h1>
+    <p class="pagehead__body">
+      Everything listed here is running in something that has real users. Where
+      a choice was load-bearing, the reason is next to it.
+    </p>
+  </section>
+
+  <section>
+    <p class="section__label">By layer</p>
+    <div class="groups reveal">
+      {
+        stack.map((group) => (
+          <div class="group">
+            <p class="group__name">{group.name}</p>
+            <ul class="tags">
+              {group.items.map((item) => (
+                <li class="tag">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <p class="section__label">Choices worth explaining</p>
+    <div class="cards">
+      <article class="card reveal">
+        <h2>Local LLMs instead of an API</h2>
+        <p class="card__body">
+          Classification runs on Ollama against hardware I control. Two reasons:
+          the corpus is thousands of articles a day, so a per-token bill would
+          dominate the unit economics — and compliance customers are the least
+          willing people on earth to let their data leave the building.
+        </p>
+      </article>
+
+      <article class="card reveal">
+        <h2>Redis Streams instead of a queue</h2>
+        <p class="card__body">
+          Consumer groups give each service its own cursor over the same log, so
+          adding a consumer never touches the producer. Replay is free, which
+          matters when a classifier changes and yesterday's articles need a
+          second pass.
+        </p>
+      </article>
+
+      <article class="card reveal">
+        <h2>A database per service</h2>
+        <p class="card__body">
+          One PostgreSQL instance, many databases, no cross-service joins. It
+          costs a little duplication and buys the ability to change one
+          service's schema without a meeting.
+        </p>
+      </article>
+
+      <article class="card reveal">
+        <h2>JWKS at the gateway</h2>
+        <p class="card__body">
+          Traefik verifies RS256 signatures against a cached key set rather than
+          calling the identity provider per request. Auth stops being a
+          bottleneck, and claims like plan and rate limit ride along in the
+          token.
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>

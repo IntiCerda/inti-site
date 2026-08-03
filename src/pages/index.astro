@@ -1,143 +1,116 @@
 ---
 import Base from "../layouts/Base.astro";
-
-const projects = [
-  {
-    name: "Media Intelligence Platform",
-    meta: "2025 — present · Event-driven SaaS",
-    body: "A national media-monitoring platform for the Chilean market, built as 16 services. It ingests news from 133 outlets, classifies it with local LLMs, extracts entities and facts, and turns that into alerts, dashboards and compliance reports. FastAPI services over a Redis Streams event bus, PostgreSQL with pgvector, Next.js 15 dashboards, JWT auth and Stripe billing.",
-    links: [
-      {
-        label: "Architecture writeup",
-        href: "https://github.com/IntiCerda/media-intel-architecture",
-      },
-    ],
-  },
-  {
-    name: "Compliance Monitor",
-    meta: "2025 — present · Commercial product",
-    body: "Reputational-risk and regulatory monitoring for companies in regulated industries, built on the same ingestion engine with its own auth boundary and dashboard. A dedicated agent service runs a catalog of LLM enrichments over classified articles in a VRAM-gated batch.",
-    links: [{ label: "compliancemonitor.cl", href: "https://compliancemonitor.cl" }],
-  },
-  {
-    name: "SEN Dashboard",
-    meta: "2025 · Fiscalía Regional de Coquimbo",
-    body: "Scraping and AI classification pipeline for police-news analysis, delivered for a regional public prosecutor's office. Fully containerized: PostgreSQL, Redis with 36h dedup, a local Ollama model and a Next.js front end.",
-    links: [],
-  },
-  {
-    name: "ai-job-search",
-    meta: "2025 · Open source",
-    body: "A job-application framework that runs on your own machine, built on Claude Code: evaluates postings, tailors CVs, writes cover letters and preps interviews. Fork it and own it.",
-    links: [
-      { label: "Source", href: "https://github.com/IntiCerda/ai-job-search" },
-    ],
-  },
-  {
-    name: "Script-Dev-W10-W11",
-    meta: "2024 · Open source",
-    body: "PowerShell bootstrap that takes a clean Windows install to a working development environment in one run.",
-    links: [
-      {
-        label: "Source",
-        href: "https://github.com/IntiCerda/Script-Dev-W10-W11",
-      },
-    ],
-  },
-];
-
-const stack = [
-  {
-    name: "Languages",
-    items: "TypeScript · Python · Go · SQL · Java · C++",
-  },
-  {
-    name: "Backend",
-    items: "FastAPI · Hono · NestJS · Node.js · SQLAlchemy · Prisma",
-  },
-  {
-    name: "Frontend",
-    items: "Next.js · React · Astro · Tailwind CSS",
-  },
-  {
-    name: "AI",
-    items:
-      "Ollama · local LLM classification pipelines · pgvector · embeddings · MCP · Claude Code",
-  },
-  {
-    name: "Infra & Data",
-    items:
-      "Docker · PostgreSQL · Redis Streams · Traefik · Prometheus · Grafana · Playwright",
-  },
-];
+import { services, stats } from "../data/site";
 ---
 
 <Base
-  title="Inti Cerda — Backend Engineer"
-  description="Backend engineer in Coquimbo, Chile. Python/FastAPI and TypeScript microservices, LLM pipelines and event-driven architecture."
+  title="Inti Cerda — Backend Engineer & Freelance Developer"
+  description="Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines, and full-stack product delivery — freelance and contract work."
 >
-  <section id="intro">
-    <h1>Inti Cerda</h1>
-    <p class="lede">
-      Backend engineer in Coquimbo, Chile. I build event-driven microservices
-      and local LLM pipelines, and I ship them end to end — ingestion,
-      classification, API, dashboard and billing.
-    </p>
-    <p class="lede">
-      Computer Engineering, Universidad Católica del Norte. Most of my work
-      lives in private repositories because it is a commercial product with
-      customer data, so what is public here is the architecture behind it.
-    </p>
+  <section class="hero">
+    <div class="panel">
+      <p class="pagehead__eyebrow">
+        Backend Engineer · Freelance · Coquimbo, Chile
+      </p>
+      <h1 class="t-display hero__title">
+        I build the<br />pipeline <span class="hero__amp">&amp;</span> the<br />
+        screen it feeds.
+      </h1>
+      <p class="hero__body">
+        I design and ship event-driven systems end to end — ingestion,
+        classification, API, dashboard, auth and billing. Most of it runs local
+        LLMs on hardware I control, because the data usually cannot leave the
+        building.
+      </p>
+      <div class="actions">
+        <a class="btn" href="/work/">See the work</a>
+        <a class="btn" href="/architecture/">How it fits together</a>
+        <a class="btn btn--solid" href="mailto:inti.cerda.r@gmail.com">
+          Hire me
+        </a>
+      </div>
+    </div>
   </section>
 
-  <section id="work">
-    <p class="section__label">Work</p>
-    {
-      projects.map((project) => (
-        <article class="entry">
-          <p class="entry__meta">{project.meta}</p>
-          <h2>{project.name}</h2>
-          <p class="entry__body">{project.body}</p>
-          {project.links.length > 0 && (
-            <p class="entry__links">
-              {project.links.map((link) => (
-                <a href={link.href}>{link.label}</a>
+  <section>
+    <p class="section__label">In production right now</p>
+    <div class="stats reveal">
+      {
+        stats.map((stat) => (
+          <div class="stat">
+            <p class="stat__value"><span data-count={stat.value}>{stat.value}</span>{stat.suffix}</p>
+            <p class="stat__label">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <p class="section__label">What I do</p>
+    <div class="cards">
+      {
+        services.map((service) => (
+          <article class="card reveal">
+            <h2>{service.title}</h2>
+            <p class="card__body">{service.body}</p>
+            <ul class="tags">
+              {service.points.map((point) => (
+                <li class="tag">{point}</li>
               ))}
-            </p>
-          )}
-        </article>
-      ))
-    }
+            </ul>
+          </article>
+        ))
+      }
+    </div>
   </section>
 
-  <section id="stack">
-    <p class="section__label">Stack</p>
-    {
-      stack.map((group) => (
-        <div class="group">
-          <p class="group__name">{group.name}</p>
-          <p class="group__items">{group.items}</p>
-        </div>
-      ))
-    }
-  </section>
-
-  <section id="contact">
-    <p class="section__label">Contact</p>
-    <dl class="contact">
-      <dt>Email</dt>
-      <dd><a href="mailto:inti.cerda.r@gmail.com">inti.cerda.r@gmail.com</a></dd>
-
-      <dt>GitHub</dt>
-      <dd><a href="https://github.com/IntiCerda">github.com/IntiCerda</a></dd>
-
-      <dt>LinkedIn</dt>
-      <dd>
-        <a href="https://www.linkedin.com/in/inti-cerda/">in/inti-cerda</a>
-      </dd>
-
-      <dt>Location</dt>
-      <dd>Coquimbo, Chile</dd>
-    </dl>
+  <section>
+    <p class="section__label">Background</p>
+    <div class="panel reveal">
+      <h2>Computer Engineering, Universidad Católica del Norte</h2>
+      <p class="pagehead__body">
+        I started with compilers and C++ coursework, moved through Go and
+        TypeScript backends, and ended up building a 16-service platform on my
+        own. The through-line is that I like the parts other people find
+        tedious: the message bus, the retry logic, the thing that wakes you at
+        3am if you got it wrong.
+      </p>
+      <p class="pagehead__body">
+        Most of my current work lives in private repositories — it is a
+        commercial product with customer data. What is public is the
+        architecture behind it, and I am happy to walk through the rest.
+      </p>
+      <div class="actions" style="margin-top:2rem">
+        <a class="btn" href="https://github.com/IntiCerda">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/inti-cerda/">
+          LinkedIn
+        </a>
+      </div>
+    </div>
   </section>
 </Base>
+
+<style>
+  .hero {
+    margin-top: 3.5rem;
+  }
+
+  .hero__title {
+    margin: 1.5rem 0 1.75rem;
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+
+  .hero__amp {
+    /* The one non-structural flourish on the page. */
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero__body {
+    max-width: 52ch;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+</style>

@@ -1,0 +1,206 @@
+---
+import Base from "../layouts/Base.astro";
+import { pipeline } from "../data/site";
+---
+
+<Base
+  title="Architecture — Inti Cerda"
+  description="How a 16-service, event-driven media intelligence platform fits together: ingestion pipeline, Redis Streams event bus and gateway authentication."
+>
+  <section class="pagehead">
+    <p class="pagehead__eyebrow">Architecture</p>
+    <h1>Sixteen services, one event bus, no shared database.</h1>
+    <p class="pagehead__body">
+      Every service owns its own PostgreSQL database and talks to the rest only
+      through Redis Streams. These diagrams describe the system that is running
+      in production today.
+    </p>
+  </section>
+
+  <section>
+    <p class="section__label">01 — Ingestion path</p>
+    <ol class="flow reveal">
+      {
+        pipeline.map((stage, i) => (
+          <li class="flow__stage" style={`--i:${i}`}>
+            <span class="flow__step">{stage.step}</span>
+            <span class="flow__name">{stage.name}</span>
+            <span class="flow__detail">{stage.detail}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="pagehead__body">
+      A scrape run fans out across 160+ outlets with Playwright, dedups against
+      Redis, then hands each article to a local model for domain
+      classification. Embeddings land in pgvector so the whole corpus stays
+      semantically searchable.
+    </p>
+  </section>
+
+  <section>
+    <p class="section__label">02 — Event bus topology</p>
+    <figure class="figure reveal">
+      <div class="figure__body">
+        <svg viewBox="0 0 820 400" role="img" aria-labelledby="busTitle">
+          <title id="busTitle">
+            Producers publish to Redis Streams; consumers subscribe. No service
+            calls another service's database.
+          </title>
+
+          <!-- Producers -->
+          <rect class="dg-box" x="60" y="40" width="200" height="56"></rect>
+          <text class="dg-label" x="76" y="66">web-scraper-core</text>
+          <text class="dg-sub" x="76" y="83">Playwright + LLM classify</text>
+
+          <rect class="dg-box" x="330" y="40" width="180" height="56"></rect>
+          <text class="dg-label" x="346" y="66">media-billing</text>
+          <text class="dg-sub" x="346" y="83">Stripe webhooks</text>
+
+          <rect class="dg-box" x="580" y="40" width="180" height="56"></rect>
+          <text class="dg-label" x="596" y="66">media-alerts</text>
+          <text class="dg-sub" x="596" y="83">rule engine</text>
+
+          <!-- Producer drops -->
+          <path class="dg-line" d="M160 96 L160 190"></path>
+          <path class="dg-line" d="M420 96 L420 190"></path>
+          <path class="dg-line" d="M670 96 L670 190"></path>
+
+          <!-- The bus -->
+          <path class="dg-line" d="M40 190 L780 190" stroke-width="4"></path>
+          <text class="dg-note" x="40" y="178">REDIS STREAMS</text>
+
+          <text class="dg-sub" x="170" y="182">article.classified</text>
+          <text class="dg-sub" x="430" y="182">tenant.plan.changed</text>
+          <text class="dg-sub" x="560" y="182">alert.triggered</text>
+
+          <!-- Travelling packets -->
+          <rect class="dg-packet" x="0" y="185" width="10" height="10"></rect>
+          <rect
+            class="dg-packet"
+            x="0"
+            y="185"
+            width="10"
+            height="10"
+            style="--d:1.1s"></rect>
+          <rect
+            class="dg-packet"
+            x="0"
+            y="185"
+            width="10"
+            height="10"
+            style="--d:2.2s"></rect>
+
+          <!-- Consumer risers -->
+          <path class="dg-line" d="M120 190 L120 290"></path>
+          <path class="dg-line" d="M330 190 L330 290"></path>
+          <path class="dg-line" d="M540 190 L540 290"></path>
+          <path class="dg-line" d="M700 190 L700 290"></path>
+
+          <!-- Consumers -->
+          <rect class="dg-box" x="40" y="290" width="170" height="56"></rect>
+          <text class="dg-label" x="54" y="316">media-alerts</text>
+          <text class="dg-sub" x="54" y="333">evaluates rules</text>
+
+          <rect class="dg-box" x="245" y="290" width="200" height="56"></rect>
+          <text class="dg-label" x="259" y="316">compliance-intel</text>
+          <text class="dg-sub" x="259" y="333">LLM enrichment</text>
+
+          <rect class="dg-box" x="470" y="290" width="150" height="56"></rect>
+          <text class="dg-label" x="484" y="316">media-auth</text>
+          <text class="dg-sub" x="484" y="333">plan &amp; limits</text>
+
+          <rect class="dg-box" x="645" y="290" width="135" height="56"></rect>
+          <text class="dg-label" x="659" y="316">notifications</text>
+          <text class="dg-sub" x="659" y="333">telegram · mail</text>
+        </svg>
+      </div>
+      <figcaption class="figure__caption">
+        Producers never call consumers. Adding a consumer means subscribing to a
+        stream, not editing an upstream service.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="section__label">03 — Request authentication</p>
+    <figure class="figure reveal">
+      <div class="figure__body">
+        <svg viewBox="0 0 820 250" role="img" aria-labelledby="authTitle">
+          <title id="authTitle">
+            Traefik verifies every request with forwardAuth, then checks the JWT
+            signature against a cached JWKS instead of calling the identity
+            provider each time.
+          </title>
+
+          <rect class="dg-box" x="20" y="90" width="130" height="56"></rect>
+          <text class="dg-label" x="34" y="116">Client</text>
+          <text class="dg-sub" x="34" y="133">JWT bearer</text>
+
+          <path class="dg-line" d="M150 118 L235 118"></path>
+          <path class="dg-line" d="M225 112 L235 118 L225 124"></path>
+
+          <rect class="dg-box" x="235" y="90" width="175" height="56"></rect>
+          <text class="dg-label" x="249" y="116">media-gateway</text>
+          <text class="dg-sub" x="249" y="133">Traefik v3 · forwardAuth</text>
+
+          <!-- JWKS side trip -->
+          <path class="dg-line" d="M322 90 L322 40 L520 40"></path>
+          <path class="dg-line" d="M510 34 L520 40 L510 46"></path>
+          <rect class="dg-box" x="520" y="12" width="160" height="56"></rect>
+          <text class="dg-label" x="534" y="38">media-auth</text>
+          <text class="dg-sub" x="534" y="55">RS256 · JWKS</text>
+          <text class="dg-note" x="332" y="32">public keys, cached</text>
+
+          <path class="dg-line" d="M410 118 L495 118"></path>
+          <path class="dg-line" d="M485 112 L495 118 L485 124"></path>
+
+          <rect class="dg-box" x="495" y="90" width="185" height="56"></rect>
+          <text class="dg-label" x="509" y="116">downstream service</text>
+          <text class="dg-sub" x="509" y="133">org_id · plan · rate_limit</text>
+
+          <rect class="dg-packet" x="0" y="113" width="9" height="9"></rect>
+          <rect
+            class="dg-packet"
+            x="0"
+            y="113"
+            width="9"
+            height="9"
+            style="--d:1.6s"></rect>
+
+          <text class="dg-note" x="20" y="200">
+            Claims travel in the token, so no service needs a lookup to know the
+            caller's plan.
+          </text>
+        </svg>
+      </div>
+      <figcaption class="figure__caption">
+        The gateway is the only component exposed to the internet. Everything
+        behind it trusts the forwarded claims.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="section__label">04 — Screens</p>
+    <div class="panel reveal">
+      <h2>What this looks like from the front.</h2>
+      <p class="pagehead__body">
+        The marketing site, the product and the internal operations panel that
+        watches this pipeline run.
+      </p>
+      <div class="actions" style="margin-top:2rem">
+        <a class="btn btn--solid" href="/screens/">See the screens</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  code {
+    font-family: var(--mono);
+    font-size: 0.875em;
+    border: var(--border) solid var(--rule);
+    padding: 0.1em 0.35em;
+  }
+</style>
