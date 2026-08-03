@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
 import { stack } from "../data/site";
 ---
 
@@ -25,7 +26,10 @@ import { stack } from "../data/site";
             <p class="group__name">{group.name}</p>
             <ul class="tags">
               {group.items.map((item) => (
-                <li class="tag">{item}</li>
+                <li class="tag tag--icon">
+                  <Icon slug={item.slug} label={item.label} />
+                  {item.label}
+                </li>
               ))}
             </ul>
           </div>

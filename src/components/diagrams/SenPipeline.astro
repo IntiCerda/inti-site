@@ -1,0 +1,56 @@
+<svg viewBox="0 0 820 250" role="img" aria-labelledby="senTitle">
+  <title id="senTitle">
+    Police-news pipeline for the regional prosecutor's office: scrape, dedup
+    against a 36 hour Redis window, classify with a local model, store, serve.
+  </title>
+
+  <rect class="dg-box" x="20" y="40" width="150" height="54"></rect>
+  <text class="dg-label" x="34" y="65">scraper</text>
+  <text class="dg-sub" x="34" y="82">python-api</text>
+
+  <path class="dg-line" d="M170 67 L216 67"></path>
+  <path class="dg-line" d="M206 61 L216 67 L206 73"></path>
+
+  <!-- Dedup decision -->
+  <path class="dg-line" d="M266 33 L310 67 L266 101 L222 67 Z"></path>
+  <text class="dg-sub" x="266" y="122" text-anchor="middle">seen in 36h?</text>
+
+  <path class="dg-line" d="M266 33 L266 12 L420 12"></path>
+  <path class="dg-line" d="M410 6 L420 12 L410 18"></path>
+  <text class="dg-note" x="276" y="28">yes → drop</text>
+  <rect class="dg-box" x="420" y="0" width="110" height="26"></rect>
+  <text class="dg-sub" x="432" y="17">discarded</text>
+
+  <path class="dg-line" d="M310 67 L356 67"></path>
+  <path class="dg-line" d="M346 61 L356 67 L346 73"></path>
+  <text class="dg-note" x="318" y="58">no</text>
+
+  <rect class="dg-box" x="356" y="40" width="160" height="54"></rect>
+  <text class="dg-label" x="370" y="65">classifier</text>
+  <text class="dg-sub" x="370" y="82">ollama · local</text>
+
+  <path class="dg-line" d="M516 67 L562 67"></path>
+  <path class="dg-line" d="M552 61 L562 67 L552 73"></path>
+
+  <rect class="dg-box" x="562" y="40" width="130" height="54"></rect>
+  <text class="dg-label" x="576" y="65">postgres</text>
+  <text class="dg-sub" x="576" y="82">prisma</text>
+
+  <path class="dg-line" d="M627 94 L627 140"></path>
+  <path class="dg-line" d="M621 130 L627 140 L633 130"></path>
+
+  <rect class="dg-box" x="537" y="140" width="180" height="54"></rect>
+  <text class="dg-label" x="551" y="165">Next.js 15</text>
+  <text class="dg-sub" x="551" y="182">API + front end</text>
+
+  <text class="dg-note" x="20" y="165">
+    Everything runs in Docker on the office's own hardware.
+  </text>
+  <text class="dg-note" x="20" y="182">
+    No article ever leaves the building.
+  </text>
+
+  <rect class="dg-packet" x="24" y="62" width="9" height="9" style="--to:660px"></rect>
+  <rect class="dg-packet" x="24" y="62" width="9" height="9" style="--to:660px;--d:1.5s"
+  ></rect>
+</svg>

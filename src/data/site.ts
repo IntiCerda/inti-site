@@ -107,37 +107,63 @@ export const projects = [
   },
 ];
 
+// `slug` maps to a simple-icons brand mark; omit it where no mark exists and
+// the Icon component falls back to a monogram.
 export const stack = [
   {
     name: "Languages",
-    items: ["TypeScript", "Python", "Go", "SQL", "Java", "C++"],
+    items: [
+      { label: "TypeScript", slug: "typescript" },
+      { label: "Python", slug: "python" },
+      { label: "Go", slug: "go" },
+      { label: "JavaScript", slug: "javascript" },
+      { label: "Java", slug: "openjdk" },
+      { label: "C++", slug: "cplusplus" },
+      { label: "SQL" },
+    ],
   },
   {
     name: "Backend",
-    items: ["FastAPI", "Hono", "NestJS", "Node.js", "SQLAlchemy", "Prisma"],
+    items: [
+      { label: "FastAPI", slug: "fastapi" },
+      { label: "Hono", slug: "hono" },
+      { label: "NestJS", slug: "nestjs" },
+      { label: "Node.js", slug: "nodedotjs" },
+      { label: "SQLAlchemy", slug: "sqlalchemy" },
+      { label: "Prisma", slug: "prisma" },
+    ],
   },
-  { name: "Frontend", items: ["Next.js", "React", "Astro", "Tailwind"] },
+  {
+    name: "Frontend",
+    items: [
+      { label: "Next.js", slug: "nextdotjs" },
+      { label: "React", slug: "react" },
+      { label: "Astro", slug: "astro" },
+      { label: "Tailwind", slug: "tailwindcss" },
+    ],
+  },
   {
     name: "AI",
     items: [
-      "Ollama",
-      "LLM pipelines",
-      "pgvector",
-      "Embeddings",
-      "MCP",
-      "Claude Code",
+      { label: "Ollama", slug: "ollama" },
+      { label: "Claude Code", slug: "anthropic" },
+      { label: "LLM pipelines" },
+      { label: "pgvector", slug: "postgresql" },
+      { label: "Embeddings" },
+      { label: "MCP" },
     ],
   },
   {
     name: "Infra & Data",
     items: [
-      "Docker",
-      "PostgreSQL",
-      "Redis Streams",
-      "Traefik",
-      "Prometheus",
-      "Grafana",
-      "Playwright",
+      { label: "Docker", slug: "docker" },
+      { label: "PostgreSQL", slug: "postgresql" },
+      { label: "Redis Streams", slug: "redis" },
+      { label: "Traefik", slug: "traefikproxy" },
+      { label: "Prometheus", slug: "prometheus" },
+      { label: "Grafana", slug: "grafana" },
+      { label: "Playwright" },
+      { label: "GitHub Actions", slug: "githubactions" },
     ],
   },
 ];

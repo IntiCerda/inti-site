@@ -1,0 +1,73 @@
+<svg viewBox="0 0 820 400" role="img" aria-labelledby="busTitle">
+  <title id="busTitle">
+    Producers publish to Redis Streams; consumers subscribe. No service calls
+    another service's database.
+  </title>
+
+  <!-- Producers -->
+  <rect class="dg-box" x="60" y="40" width="200" height="56"></rect>
+  <text class="dg-label" x="76" y="66">web-scraper-core</text>
+  <text class="dg-sub" x="76" y="83">Playwright + LLM classify</text>
+
+  <rect class="dg-box" x="330" y="40" width="180" height="56"></rect>
+  <text class="dg-label" x="346" y="66">media-billing</text>
+  <text class="dg-sub" x="346" y="83">Stripe webhooks</text>
+
+  <rect class="dg-box" x="580" y="40" width="180" height="56"></rect>
+  <text class="dg-label" x="596" y="66">media-alerts</text>
+  <text class="dg-sub" x="596" y="83">rule engine</text>
+
+  <!-- Producer drops -->
+  <path class="dg-line" d="M160 96 L160 190"></path>
+  <path class="dg-line" d="M420 96 L420 190"></path>
+  <path class="dg-line" d="M670 96 L670 190"></path>
+
+  <!-- The bus -->
+  <path class="dg-line" d="M40 190 L780 190" stroke-width="4"></path>
+  <text class="dg-note" x="40" y="178">REDIS STREAMS</text>
+
+  <text class="dg-sub" x="170" y="182">article.classified</text>
+  <text class="dg-sub" x="430" y="182">tenant.plan.changed</text>
+  <text class="dg-sub" x="560" y="182">alert.triggered</text>
+
+  <!-- Travelling packets -->
+  <rect class="dg-packet" x="40" y="185" width="10" height="10" style="--to:730px"
+  ></rect>
+  <rect
+    class="dg-packet"
+    x="40"
+    y="185"
+    width="10"
+    height="10"
+    style="--to:730px;--d:1.1s"></rect>
+  <rect
+    class="dg-packet"
+    x="40"
+    y="185"
+    width="10"
+    height="10"
+    style="--to:730px;--d:2.2s"></rect>
+
+  <!-- Consumer risers -->
+  <path class="dg-line" d="M120 190 L120 290"></path>
+  <path class="dg-line" d="M330 190 L330 290"></path>
+  <path class="dg-line" d="M540 190 L540 290"></path>
+  <path class="dg-line" d="M700 190 L700 290"></path>
+
+  <!-- Consumers -->
+  <rect class="dg-box" x="40" y="290" width="170" height="56"></rect>
+  <text class="dg-label" x="54" y="316">media-alerts</text>
+  <text class="dg-sub" x="54" y="333">evaluates rules</text>
+
+  <rect class="dg-box" x="245" y="290" width="200" height="56"></rect>
+  <text class="dg-label" x="259" y="316">compliance-intel</text>
+  <text class="dg-sub" x="259" y="333">LLM enrichment</text>
+
+  <rect class="dg-box" x="470" y="290" width="150" height="56"></rect>
+  <text class="dg-label" x="484" y="316">media-auth</text>
+  <text class="dg-sub" x="484" y="333">plan &amp; limits</text>
+
+  <rect class="dg-box" x="645" y="290" width="135" height="56"></rect>
+  <text class="dg-label" x="659" y="316">notifications</text>
+  <text class="dg-sub" x="659" y="333">telegram · mail</text>
+</svg>

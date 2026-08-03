@@ -214,6 +214,14 @@
   color: var(--muted);
 }
 
+.tag--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.3125rem 0.5625rem;
+  color: var(--ink);
+}
+
 /* ---- Grouped rows ---- */
 
 .groups {
@@ -311,19 +319,29 @@
   opacity: 0.6;
 }
 
-/* A packet running the wire — the diagram's only moving part. */
+/*
+  A packet running the wire — the diagram's only moving part. Uses translateX
+  rather than offset-distance, which silently does nothing without offset-path.
+  Each diagram sets --to to its own travel distance in user units.
+*/
 .dg-packet {
   fill: currentColor;
-  animation: dg-travel 3.2s linear infinite;
+  animation: dg-travel 3.4s linear infinite;
   animation-delay: var(--d, 0s);
 }
 
 @keyframes dg-travel {
-  from {
-    offset-distance: 0%;
+  0% {
+    transform: translateX(0);
+    opacity: 0;
   }
-  to {
-    offset-distance: 100%;
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--to, 700px));
+    opacity: 0;
   }
 }
 
