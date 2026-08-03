@@ -1,0 +1,143 @@
+---
+import Base from "../layouts/Base.astro";
+
+const projects = [
+  {
+    name: "Media Intelligence Platform",
+    meta: "2025 — present · Event-driven SaaS",
+    body: "A national media-monitoring platform for the Chilean market, built as 16 services. It ingests news from 133 outlets, classifies it with local LLMs, extracts entities and facts, and turns that into alerts, dashboards and compliance reports. FastAPI services over a Redis Streams event bus, PostgreSQL with pgvector, Next.js 15 dashboards, JWT auth and Stripe billing.",
+    links: [
+      {
+        label: "Architecture writeup",
+        href: "https://github.com/IntiCerda/media-intel-architecture",
+      },
+    ],
+  },
+  {
+    name: "Compliance Monitor",
+    meta: "2025 — present · Commercial product",
+    body: "Reputational-risk and regulatory monitoring for companies in regulated industries, built on the same ingestion engine with its own auth boundary and dashboard. A dedicated agent service runs a catalog of LLM enrichments over classified articles in a VRAM-gated batch.",
+    links: [{ label: "compliancemonitor.cl", href: "https://compliancemonitor.cl" }],
+  },
+  {
+    name: "SEN Dashboard",
+    meta: "2025 · Fiscalía Regional de Coquimbo",
+    body: "Scraping and AI classification pipeline for police-news analysis, delivered for a regional public prosecutor's office. Fully containerized: PostgreSQL, Redis with 36h dedup, a local Ollama model and a Next.js front end.",
+    links: [],
+  },
+  {
+    name: "ai-job-search",
+    meta: "2025 · Open source",
+    body: "A job-application framework that runs on your own machine, built on Claude Code: evaluates postings, tailors CVs, writes cover letters and preps interviews. Fork it and own it.",
+    links: [
+      { label: "Source", href: "https://github.com/IntiCerda/ai-job-search" },
+    ],
+  },
+  {
+    name: "Script-Dev-W10-W11",
+    meta: "2024 · Open source",
+    body: "PowerShell bootstrap that takes a clean Windows install to a working development environment in one run.",
+    links: [
+      {
+        label: "Source",
+        href: "https://github.com/IntiCerda/Script-Dev-W10-W11",
+      },
+    ],
+  },
+];
+
+const stack = [
+  {
+    name: "Languages",
+    items: "TypeScript · Python · Go · SQL · Java · C++",
+  },
+  {
+    name: "Backend",
+    items: "FastAPI · Hono · NestJS · Node.js · SQLAlchemy · Prisma",
+  },
+  {
+    name: "Frontend",
+    items: "Next.js · React · Astro · Tailwind CSS",
+  },
+  {
+    name: "AI",
+    items:
+      "Ollama · local LLM classification pipelines · pgvector · embeddings · MCP · Claude Code",
+  },
+  {
+    name: "Infra & Data",
+    items:
+      "Docker · PostgreSQL · Redis Streams · Traefik · Prometheus · Grafana · Playwright",
+  },
+];
+---
+
+<Base
+  title="Inti Cerda — Backend Engineer"
+  description="Backend engineer in Coquimbo, Chile. Python/FastAPI and TypeScript microservices, LLM pipelines and event-driven architecture."
+>
+  <section id="intro">
+    <h1>Inti Cerda</h1>
+    <p class="lede">
+      Backend engineer in Coquimbo, Chile. I build event-driven microservices
+      and local LLM pipelines, and I ship them end to end — ingestion,
+      classification, API, dashboard and billing.
+    </p>
+    <p class="lede">
+      Computer Engineering, Universidad Católica del Norte. Most of my work
+      lives in private repositories because it is a commercial product with
+      customer data, so what is public here is the architecture behind it.
+    </p>
+  </section>
+
+  <section id="work">
+    <p class="section__label">Work</p>
+    {
+      projects.map((project) => (
+        <article class="entry">
+          <p class="entry__meta">{project.meta}</p>
+          <h2>{project.name}</h2>
+          <p class="entry__body">{project.body}</p>
+          {project.links.length > 0 && (
+            <p class="entry__links">
+              {project.links.map((link) => (
+                <a href={link.href}>{link.label}</a>
+              ))}
+            </p>
+          )}
+        </article>
+      ))
+    }
+  </section>
+
+  <section id="stack">
+    <p class="section__label">Stack</p>
+    {
+      stack.map((group) => (
+        <div class="group">
+          <p class="group__name">{group.name}</p>
+          <p class="group__items">{group.items}</p>
+        </div>
+      ))
+    }
+  </section>
+
+  <section id="contact">
+    <p class="section__label">Contact</p>
+    <dl class="contact">
+      <dt>Email</dt>
+      <dd><a href="mailto:inti.cerda.r@gmail.com">inti.cerda.r@gmail.com</a></dd>
+
+      <dt>GitHub</dt>
+      <dd><a href="https://github.com/IntiCerda">github.com/IntiCerda</a></dd>
+
+      <dt>LinkedIn</dt>
+      <dd>
+        <a href="https://www.linkedin.com/in/inti-cerda/">in/inti-cerda</a>
+      </dd>
+
+      <dt>Location</dt>
+      <dd>Coquimbo, Chile</dd>
+    </dl>
+  </section>
+</Base>
