@@ -1,6 +1,12 @@
 ---
-import "@fontsource/space-mono/400.css";
-import "@fontsource/space-mono/700.css";
+// Mincho — the heavy Japanese serif of 80s/90s anime title cards — carries
+// the display type. JetBrains Mono handles everything technical.
+// Latin subsets only — the full families ship every Japanese glyph range and
+// drag ~11MB of woff2 into the build for text that is entirely in English.
+import "@fontsource/shippori-mincho-b1/latin-700.css";
+import "@fontsource/shippori-mincho-b1/latin-800.css";
+import "@fontsource/jetbrains-mono/latin-400.css";
+import "@fontsource/jetbrains-mono/latin-700.css";
 import "../styles/components.css";
 import { nav } from "../data/site";
 
@@ -43,12 +49,16 @@ const isActive = (href: string) => (href.replace(/\/+$/, "") || "/") === path;
         hard 2px rules, offset shadows with zero blur, and a mechanical
         press on every interactive surface.
       */
+      /*
+        Dark first: the page is ink-on-black by default and only inverts when
+        the reader explicitly prefers light.
+      */
       :root {
-        --bg: #f4f4f2;
-        --paper: #ffffff;
-        --ink: #0a0a0a;
-        --muted: #6b6b6b;
-        --rule: #d8d8d6;
+        --bg: #0b0b0c;
+        --paper: #141416;
+        --ink: #ededea;
+        --muted: #8e8e88;
+        --rule: #2c2c2e;
         --shadow: 6px 6px 0 var(--ink);
         --shadow-sm: 4px 4px 0 var(--ink);
 
@@ -59,25 +69,27 @@ const isActive = (href: string) => (href.replace(/\/+$/, "") || "/") === path;
         */
         --btn-face: #ffffff;
         --btn-ink: #0a0a0a;
-        --btn-shadow: #0a0a0a;
+        --btn-shadow: #5a5a5a;
 
         --measure: 74rem;
         --border: 2px;
 
-        --mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+        --display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho",
+          Georgia, "Times New Roman", serif;
+        --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
           monospace;
         --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
       }
 
-      @media (prefers-color-scheme: dark) {
+      @media (prefers-color-scheme: light) {
         :root {
-          --bg: #0c0c0c;
-          --paper: #161616;
-          --ink: #f2f2f2;
-          --muted: #9a9a9a;
-          --rule: #2a2a2a;
-          --btn-shadow: #5a5a5a;
+          --bg: #f2f1ec;
+          --paper: #ffffff;
+          --ink: #0d0d0e;
+          --muted: #67675f;
+          --rule: #d5d4cd;
+          --btn-shadow: #0d0d0e;
         }
       }
 
@@ -101,21 +113,27 @@ const isActive = (href: string) => (href.replace(/\/+$/, "") || "/") === path;
         -webkit-font-smoothing: antialiased;
       }
 
-      /* Faint grid, so the flat background still reads as a surface. */
+      /*
+        Screentone: the halftone dot fill used to shade black-and-white manga
+        panels. Faded out below the fold so it reads as atmosphere, not pattern.
+      */
       body::before {
         content: "";
         position: fixed;
         inset: 0;
         z-index: -1;
         pointer-events: none;
-        opacity: 0.35;
-        background-image: linear-gradient(
-            var(--rule) var(--border),
-            transparent var(--border)
-          ),
-          linear-gradient(90deg, var(--rule) var(--border), transparent var(--border));
-        background-size: 4rem 4rem;
-        mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, #000, transparent);
+        opacity: 0.5;
+        background-image: radial-gradient(
+          var(--rule) 1px,
+          transparent 1.2px
+        );
+        background-size: 6px 6px;
+        mask-image: radial-gradient(
+          ellipse 110% 70% at 50% 0%,
+          #000,
+          transparent
+        );
       }
 
       .shell {
@@ -131,22 +149,23 @@ const isActive = (href: string) => (href.replace(/\/+$/, "") || "/") === path;
       h1,
       h2,
       h3 {
-        font-family: var(--mono);
+        font-family: var(--display);
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.01em;
         margin: 0;
         text-wrap: balance;
       }
 
       .t-display {
-        font-size: clamp(2.75rem, 1.6rem + 5.2vw, 4rem);
-        line-height: 0.98;
-        letter-spacing: -0.05em;
+        font-weight: 800;
+        font-size: clamp(2.75rem, 1.6rem + 5.2vw, 4.25rem);
+        line-height: 1.06;
+        letter-spacing: -0.02em;
       }
 
       h1 {
-        font-size: clamp(2rem, 1.5rem + 2.2vw, 2.75rem);
-        line-height: 1.08;
+        font-size: clamp(2rem, 1.5rem + 2.2vw, 2.875rem);
+        line-height: 1.15;
       }
 
       h2 {

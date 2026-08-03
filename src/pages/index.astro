@@ -8,27 +8,60 @@ import { services, stats } from "../data/site";
   description="Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines, and full-stack product delivery — freelance and contract work."
 >
   <section class="hero">
-    <div class="panel">
-      <p class="pagehead__eyebrow">
-        Backend Engineer · Freelance · Coquimbo, Chile
-      </p>
-      <h1 class="t-display hero__title">
-        I build the<br />pipeline <span class="hero__amp">&amp;</span> the<br />
-        screen it feeds.
-      </h1>
-      <p class="hero__body">
-        I design and ship event-driven systems end to end — ingestion,
-        classification, API, dashboard, auth and billing. Most of it runs local
-        LLMs on hardware I control, because the data usually cannot leave the
-        building.
-      </p>
-      <div class="actions">
-        <a class="btn" href="/work/">See the work</a>
-        <a class="btn" href="/architecture/">How it fits together</a>
-        <a class="btn btn--solid" href="mailto:inti.cerda.r@gmail.com">
-          Hire me
-        </a>
+    <div class="panel hero__panel">
+      <div>
+        <p class="pagehead__eyebrow">
+          Backend Engineer · Freelance · Coquimbo, Chile
+        </p>
+        <h1 class="t-display hero__title">
+          I build the<br />pipeline <span class="hero__amp">&amp;</span> the<br
+          />screen it feeds.
+        </h1>
+        <p class="hero__body">
+          I design and ship event-driven systems end to end — ingestion,
+          classification, API, dashboard, auth and billing. Most of it runs
+          local LLMs on hardware I control, because the data usually cannot
+          leave the building.
+        </p>
+        <div class="actions">
+          <a class="btn" href="/work/">See the work</a>
+          <a class="btn" href="/architecture/">How it fits together</a>
+          <a class="btn btn--solid" href="mailto:inti.cerda.r@gmail.com">
+            Hire me
+          </a>
+        </div>
       </div>
+
+      <dl class="readout">
+        <div class="readout__row">
+          <dt>Based</dt>
+          <dd>Coquimbo, CL</dd>
+        </div>
+        <div class="readout__row">
+          <dt>Zone</dt>
+          <dd>UTC−4</dd>
+        </div>
+        <div class="readout__row">
+          <dt>Status</dt>
+          <dd>Open to work</dd>
+        </div>
+        <div class="readout__row">
+          <dt>Mode</dt>
+          <dd>Remote · Contract</dd>
+        </div>
+        <div class="readout__row">
+          <dt>Core</dt>
+          <dd>Python · TypeScript · Go</dd>
+        </div>
+        <div class="readout__row">
+          <dt>Focus</dt>
+          <dd>Event-driven · Local LLM</dd>
+        </div>
+        <div class="readout__row">
+          <dt>Langs</dt>
+          <dd>Español · English</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
@@ -96,10 +129,51 @@ import { services, stats } from "../data/site";
     margin-top: 3.5rem;
   }
 
+  /* The readout fills the column the display type leaves empty. */
+  .hero__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 19.5rem;
+    gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+    align-items: start;
+  }
+
   .hero__title {
     margin: 1.5rem 0 1.75rem;
+  }
+
+  .readout {
+    margin: 0;
+    border: var(--border) solid var(--rule);
     font-family: var(--mono);
-    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  .readout__row {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .readout__row:last-child {
+    border-bottom: 0;
+  }
+
+  .readout dt {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .readout dd {
+    margin: 0;
+  }
+
+  @media (max-width: 56rem) {
+    .hero__panel {
+      grid-template-columns: 1fr;
+    }
   }
 
   .hero__amp {
