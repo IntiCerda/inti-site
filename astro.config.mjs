@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://inticerda.dev',
+  site: 'https://inti-site.vercel.app',
 });
