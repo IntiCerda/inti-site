@@ -346,6 +346,12 @@
 }
 
 @media (max-width: 40rem) {
+  /* Stack these, so the horizontal dividers below match the layout. */
+  .flow,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
   .flow__stage,
   .stat {
     border-right: 0;

@@ -154,6 +154,12 @@ const systems = [
     border: 0;
     margin: 0;
     padding: 0;
+    /*
+      Browsers give fieldset min-inline-size: min-content, so it refuses to
+      shrink below its widest descendant — here a 544px diagram — and drags the
+      whole page wider than the viewport, defeating the scroll container below.
+    */
+    min-inline-size: 0;
   }
 
   .switch__tab {
