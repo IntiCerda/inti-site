@@ -1,8 +1,34 @@
+---
+import type { Lang } from "../../data/site";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const t = {
+  title: {
+    en: "Police-news pipeline for the regional prosecutor's office: scrape, dedup against a 36 hour Redis window, classify with a local model, store, serve.",
+    es: "Pipeline de noticias policiales para la fiscalía regional: scraping, dedup contra una ventana de 36 horas en Redis, clasificación con un modelo local, almacenamiento y servicio.",
+  },
+  seen: { en: "seen in 36h?", es: "¿visto en 36h?" },
+  yesDrop: { en: "yes → drop", es: "sí → descarta" },
+  discarded: { en: "discarded", es: "descartado" },
+  noBranch: { en: "no", es: "no" },
+  noteDocker: {
+    en: "Everything runs in Docker on the office's own hardware.",
+    es: "Todo corre en Docker en el hardware de la propia oficina.",
+  },
+  noteData: {
+    en: "No article ever leaves the building.",
+    es: "Ningún artículo sale del edificio.",
+  },
+};
+---
+
 <svg viewBox="0 0 820 250" role="img" aria-labelledby="senTitle">
-  <title id="senTitle">
-    Police-news pipeline for the regional prosecutor's office: scrape, dedup
-    against a 36 hour Redis window, classify with a local model, store, serve.
-  </title>
+  <title id="senTitle">{t.title[lang]}</title>
 
   <rect class="dg-box" x="20" y="40" width="150" height="54"></rect>
   <text class="dg-label" x="34" y="65">scraper</text>
@@ -13,17 +39,17 @@
 
   <!-- Dedup decision -->
   <path class="dg-line" d="M266 33 L310 67 L266 101 L222 67 Z"></path>
-  <text class="dg-sub" x="266" y="122" text-anchor="middle">seen in 36h?</text>
+  <text class="dg-sub" x="266" y="122" text-anchor="middle">{t.seen[lang]}</text>
 
   <path class="dg-line" d="M266 33 L266 12 L420 12"></path>
   <path class="dg-line" d="M410 6 L420 12 L410 18"></path>
-  <text class="dg-note" x="276" y="28">yes → drop</text>
+  <text class="dg-note" x="276" y="28">{t.yesDrop[lang]}</text>
   <rect class="dg-box" x="420" y="0" width="110" height="26"></rect>
-  <text class="dg-sub" x="432" y="17">discarded</text>
+  <text class="dg-sub" x="432" y="17">{t.discarded[lang]}</text>
 
   <path class="dg-line" d="M310 67 L356 67"></path>
   <path class="dg-line" d="M346 61 L356 67 L346 73"></path>
-  <text class="dg-note" x="318" y="58">no</text>
+  <text class="dg-note" x="318" y="58">{t.noBranch[lang]}</text>
 
   <rect class="dg-box" x="356" y="40" width="160" height="54"></rect>
   <text class="dg-label" x="370" y="65">classifier</text>
@@ -43,12 +69,8 @@
   <text class="dg-label" x="551" y="165">Next.js 15</text>
   <text class="dg-sub" x="551" y="182">API + front end</text>
 
-  <text class="dg-note" x="20" y="165">
-    Everything runs in Docker on the office's own hardware.
-  </text>
-  <text class="dg-note" x="20" y="182">
-    No article ever leaves the building.
-  </text>
+  <text class="dg-note" x="20" y="165">{t.noteDocker[lang]}</text>
+  <text class="dg-note" x="20" y="182">{t.noteData[lang]}</text>
 
   <rect class="dg-packet" x="24" y="62" width="9" height="9" style="--to:660px"></rect>
   <rect class="dg-packet" x="24" y="62" width="9" height="9" style="--to:660px;--d:1.5s"

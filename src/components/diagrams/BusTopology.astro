@@ -1,13 +1,37 @@
+---
+// Service names and event topics stay verbatim; only the human-language
+// annotations translate.
+import type { Lang } from "../../data/site";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const t = {
+  title: {
+    en: "Producers publish to Redis Streams; consumers subscribe. No service calls another service's database.",
+    es: "Los productores publican en Redis Streams; los consumidores se suscriben. Ningún servicio llama a la base de datos de otro.",
+  },
+  classify: {
+    en: "Playwright + LLM classify",
+    es: "Playwright + clasificación LLM",
+  },
+  ruleEngine: { en: "rule engine", es: "motor de reglas" },
+  evaluatesRules: { en: "evaluates rules", es: "evalúa reglas" },
+  enrichment: { en: "LLM enrichment", es: "enriquecimiento LLM" },
+  planLimits: { en: "plan & limits", es: "plan y límites" },
+};
+---
+
 <svg viewBox="0 0 820 400" role="img" aria-labelledby="busTitle">
-  <title id="busTitle">
-    Producers publish to Redis Streams; consumers subscribe. No service calls
-    another service's database.
-  </title>
+  <title id="busTitle">{t.title[lang]}</title>
 
   <!-- Producers -->
   <rect class="dg-box" x="60" y="40" width="200" height="56"></rect>
   <text class="dg-label" x="76" y="66">web-scraper-core</text>
-  <text class="dg-sub" x="76" y="83">Playwright + LLM classify</text>
+  <text class="dg-sub" x="76" y="83">{t.classify[lang]}</text>
 
   <rect class="dg-box" x="330" y="40" width="180" height="56"></rect>
   <text class="dg-label" x="346" y="66">media-billing</text>
@@ -15,7 +39,7 @@
 
   <rect class="dg-box" x="580" y="40" width="180" height="56"></rect>
   <text class="dg-label" x="596" y="66">media-alerts</text>
-  <text class="dg-sub" x="596" y="83">rule engine</text>
+  <text class="dg-sub" x="596" y="83">{t.ruleEngine[lang]}</text>
 
   <!-- Producer drops -->
   <path class="dg-line" d="M160 96 L160 190"></path>
@@ -57,15 +81,15 @@
   <!-- Consumers -->
   <rect class="dg-box" x="40" y="290" width="170" height="56"></rect>
   <text class="dg-label" x="54" y="316">media-alerts</text>
-  <text class="dg-sub" x="54" y="333">evaluates rules</text>
+  <text class="dg-sub" x="54" y="333">{t.evaluatesRules[lang]}</text>
 
   <rect class="dg-box" x="245" y="290" width="200" height="56"></rect>
   <text class="dg-label" x="259" y="316">compliance-intel</text>
-  <text class="dg-sub" x="259" y="333">LLM enrichment</text>
+  <text class="dg-sub" x="259" y="333">{t.enrichment[lang]}</text>
 
   <rect class="dg-box" x="470" y="290" width="150" height="56"></rect>
   <text class="dg-label" x="484" y="316">media-auth</text>
-  <text class="dg-sub" x="484" y="333">plan &amp; limits</text>
+  <text class="dg-sub" x="484" y="333">{t.planLimits[lang]}</text>
 
   <rect class="dg-box" x="645" y="290" width="135" height="56"></rect>
   <text class="dg-label" x="659" y="316">notifications</text>

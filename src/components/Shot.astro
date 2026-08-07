@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import type { Lang } from "../data/site";
 
 interface Props {
   desktop: ImageMetadata;
@@ -9,9 +10,16 @@ interface Props {
   caption: string;
   tags: string[];
   href?: string;
+  lang?: Lang;
 }
 
-const { desktop, mobile, title, caption, tags, href } = Astro.props;
+const { desktop, mobile, title, caption, tags, href, lang = "en" } = Astro.props;
+
+const ui = {
+  desktopAlt: { en: "desktop view", es: "vista de escritorio" },
+  mobileAlt: { en: "mobile view", es: "vista móvil" },
+  visit: { en: "Visit →", es: "Visitar →" },
+};
 ---
 
 <figure class="shot reveal">
@@ -19,7 +27,7 @@ const { desktop, mobile, title, caption, tags, href } = Astro.props;
     <div class="shot__desktop">
       <Image
         src={desktop}
-        alt={`${title} — desktop view`}
+        alt={`${title} — ${ui.desktopAlt[lang]}`}
         widths={[640, 960, 1280]}
         sizes="(max-width: 60rem) 100vw, 60vw"
         format="webp"
@@ -30,7 +38,7 @@ const { desktop, mobile, title, caption, tags, href } = Astro.props;
     <div class="shot__mobile">
       <Image
         src={mobile}
-        alt={`${title} — mobile view`}
+        alt={`${title} — ${ui.mobileAlt[lang]}`}
         widths={[240, 390]}
         sizes="240px"
         format="webp"
@@ -52,7 +60,7 @@ const { desktop, mobile, title, caption, tags, href } = Astro.props;
       href && (
         <p class="shot__link">
           <a class="btn" href={href}>
-            Visit →
+            {ui.visit[lang]}
           </a>
         </p>
       )

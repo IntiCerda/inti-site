@@ -1,9 +1,35 @@
+---
+import type { Lang } from "../../data/site";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const t = {
+  title: {
+    en: "Classified articles are filtered by regulated sector, enriched by a catalog of LLM agents in a VRAM-gated batch, then exposed read-only to the compliance service.",
+    es: "Los artículos clasificados se filtran por sector regulado, se enriquecen con un catálogo de agentes LLM en un batch regulado por VRAM y se exponen en solo lectura al servicio de compliance.",
+  },
+  regulated: { en: "regulated sector?", es: "¿sector regulado?" },
+  yes: { en: "yes", es: "sí" },
+  catalog: { en: "agent catalog", es: "catálogo de agentes" },
+  batch: { en: "continuous batch", es: "batch continuo" },
+  readOnly: { en: "read-only API", es: "API de solo lectura" },
+  soleConsumer: {
+    en: "port 4007 · sole consumer",
+    es: "port 4007 · único lector",
+  },
+  note: {
+    en: "Nothing else may read the enrichment store — the boundary is the product.",
+    es: "Nada más puede leer el almacén de enriquecimiento — el límite es el producto.",
+  },
+};
+---
+
 <svg viewBox="0 0 820 270" role="img" aria-labelledby="agentsTitle">
-  <title id="agentsTitle">
-    Classified articles are filtered by regulated sector, enriched by a catalog
-    of LLM agents in a VRAM-gated batch, then exposed read-only to the
-    compliance service.
-  </title>
+  <title id="agentsTitle">{t.title[lang]}</title>
 
   <!-- Row 1 -->
   <rect class="dg-box" x="20" y="30" width="160" height="54"></rect>
@@ -15,14 +41,14 @@
 
   <!-- Decision -->
   <path class="dg-line" d="M276 23 L320 57 L276 91 L232 57 Z"></path>
-  <text class="dg-sub" x="276" y="112" text-anchor="middle">regulated sector?</text>
+  <text class="dg-sub" x="276" y="112" text-anchor="middle">{t.regulated[lang]}</text>
 
   <path class="dg-line" d="M320 57 L366 57"></path>
   <path class="dg-line" d="M356 51 L366 57 L356 63"></path>
-  <text class="dg-note" x="330" y="48">yes</text>
+  <text class="dg-note" x="330" y="48">{t.yes[lang]}</text>
 
   <rect class="dg-box" x="366" y="30" width="180" height="54"></rect>
-  <text class="dg-label" x="380" y="55">agent catalog</text>
+  <text class="dg-label" x="380" y="55">{t.catalog[lang]}</text>
   <text class="dg-sub" x="380" y="72">qwen3:8b · nomic-embed</text>
 
   <path class="dg-line" d="M546 57 L592 57"></path>
@@ -30,7 +56,7 @@
 
   <rect class="dg-box" x="592" y="30" width="180" height="54"></rect>
   <text class="dg-label" x="606" y="55">VRAM gate</text>
-  <text class="dg-sub" x="606" y="72">continuous batch</text>
+  <text class="dg-sub" x="606" y="72">{t.batch[lang]}</text>
 
   <!-- Wrap down to row 2 -->
   <path class="dg-line" d="M682 84 L682 146"></path>
@@ -45,7 +71,7 @@
   <path class="dg-line" d="M556 167 L546 173 L556 179"></path>
 
   <rect class="dg-box" x="366" y="146" width="180" height="54"></rect>
-  <text class="dg-label" x="380" y="171">read-only API</text>
+  <text class="dg-label" x="380" y="171">{t.readOnly[lang]}</text>
   <text class="dg-sub" x="380" y="188">port 4008</text>
 
   <path class="dg-line" d="M366 173 L320 173"></path>
@@ -53,11 +79,9 @@
 
   <rect class="dg-box" x="140" y="146" width="180" height="54"></rect>
   <text class="dg-label" x="154" y="171">media-compliance</text>
-  <text class="dg-sub" x="154" y="188">port 4007 · sole consumer</text>
+  <text class="dg-sub" x="154" y="188">{t.soleConsumer[lang]}</text>
 
-  <text class="dg-note" x="20" y="240">
-    Nothing else may read the enrichment store — the boundary is the product.
-  </text>
+  <text class="dg-note" x="20" y="240">{t.note[lang]}</text>
 
   <rect class="dg-packet" x="24" y="52" width="9" height="9" style="--to:740px"></rect>
   <rect class="dg-packet" x="24" y="52" width="9" height="9" style="--to:740px;--d:1.7s"

@@ -4,26 +4,93 @@ import BusTopology from "../components/diagrams/BusTopology.astro";
 import AuthPath from "../components/diagrams/AuthPath.astro";
 import ComplianceAgents from "../components/diagrams/ComplianceAgents.astro";
 import SenPipeline from "../components/diagrams/SenPipeline.astro";
-import { pipeline } from "../data/site";
+import { pipeline, type Lang } from "../data/site";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
 
 const systems = [
   { id: "media", label: "Media Intelligence" },
   { id: "compliance", label: "Compliance Monitor" },
   { id: "sen", label: "SEN Dashboard" },
 ];
+
+const copy = {
+  en: {
+    title: "Architecture — Inti Cerda",
+    description:
+      "Flow, topology and decision diagrams for three production systems: a 16-service media platform, a compliance enrichment service and a public-sector pipeline.",
+    eyebrow: "Architecture",
+    heading: "Three systems, drawn the way they actually run.",
+    intro:
+      "Every diagram here is derived from a service that is deployed, not from a whiteboard. Pick a system.",
+    legend: "Choose a system",
+    ingestCaption:
+      "Ingestion path — a scrape run fans out across 160+ outlets, dedups against Redis, then hands each article to a local model.",
+    busCaption:
+      "Event bus topology — producers never call consumers. Adding a consumer means subscribing to a stream, not editing an upstream service.",
+    authCaption:
+      "Request authentication — the gateway is the only component exposed to the internet. Everything behind it trusts the forwarded claims.",
+    agentsCaption:
+      "Enrichment flow — classified articles are filtered by regulated sector, run through a catalog of LLM agents in a VRAM-gated batch, and exposed read-only behind a single consumer.",
+    separateHeading: "Why it is a separate service",
+    separateBody:
+      "Compliance customers are in regulated industries, so their enrichment data cannot share a boundary with the general monitoring product. It gets its own database, its own Ollama instance and exactly one permitted reader.",
+    senCaption:
+      "Police-news pipeline — dedup decision against a 36 hour Redis window before anything reaches the model, because the same wire story appears across a dozen outlets.",
+    constraintHeading: "Constraint that shaped it",
+    constraintBody:
+      "Delivered to a regional public prosecutor's office. Case-adjacent material cannot go to a third-party API, so the whole stack — database, model, front end — runs in Docker on their own hardware.",
+    screensLabel: "Screens",
+    screensHeading: "What this looks like from the front.",
+    screensBody:
+      "The marketing site, the product and the internal operations panel that watches these pipelines run.",
+    screensCta: "See the screens",
+  },
+  es: {
+    title: "Arquitectura — Inti Cerda",
+    description:
+      "Diagramas de flujo, topología y decisiones de tres sistemas en producción: una plataforma de medios de 16 servicios, un servicio de enriquecimiento de compliance y un pipeline para el sector público.",
+    eyebrow: "Arquitectura",
+    heading: "Tres sistemas, dibujados como realmente corren.",
+    intro:
+      "Cada diagrama sale de un servicio desplegado, no de una pizarra. Elige un sistema.",
+    legend: "Elige un sistema",
+    ingestCaption:
+      "Ruta de ingesta — una corrida de scraping se abre sobre 160+ medios, deduplica contra Redis y le pasa cada artículo a un modelo local.",
+    busCaption:
+      "Topología del bus de eventos — los productores nunca llaman a los consumidores. Agregar un consumidor es suscribirse a un stream, no editar un servicio aguas arriba.",
+    authCaption:
+      "Autenticación de requests — el gateway es el único componente expuesto a internet. Todo lo que hay detrás confía en los claims reenviados.",
+    agentsCaption:
+      "Flujo de enriquecimiento — los artículos clasificados se filtran por sector regulado, pasan por un catálogo de agentes LLM en un batch regulado por VRAM y se exponen en solo lectura tras un único consumidor.",
+    separateHeading: "Por qué es un servicio aparte",
+    separateBody:
+      "Los clientes de compliance están en industrias reguladas, así que sus datos de enriquecimiento no pueden compartir frontera con el producto de monitoreo general. Tiene su propia base de datos, su propia instancia de Ollama y exactamente un lector permitido.",
+    senCaption:
+      "Pipeline de noticias policiales — decisión de dedup contra una ventana de 36 horas en Redis antes de que algo llegue al modelo, porque la misma nota de agencia aparece en una docena de medios.",
+    constraintHeading: "La restricción que lo definió",
+    constraintBody:
+      "Entregado a una fiscalía regional. El material ligado a causas no puede ir a una API de terceros, así que todo el stack — base de datos, modelo, front end — corre en Docker en su propio hardware.",
+    screensLabel: "Pantallas",
+    screensHeading: "Cómo se ve desde el frente.",
+    screensBody:
+      "El sitio de marketing, el producto y el panel interno de operaciones que observa estos pipelines.",
+    screensCta: "Ver las pantallas",
+  },
+}[lang];
+
+const prefix = lang === "es" ? "/es" : "";
 ---
 
-<Base
-  title="Architecture — Inti Cerda"
-  description="Flow, topology and decision diagrams for three production systems: a 16-service media platform, a compliance enrichment service and a public-sector pipeline."
->
+<Base title={copy.title} description={copy.description} lang={lang}>
   <section class="pagehead">
-    <p class="pagehead__eyebrow">Architecture</p>
-    <h1>Three systems, drawn the way they actually run.</h1>
-    <p class="pagehead__body">
-      Every diagram here is derived from a service that is deployed, not from a
-      whiteboard. Pick a system.
-    </p>
+    <p class="pagehead__eyebrow">{copy.eyebrow}</p>
+    <h1>{copy.heading}</h1>
+    <p class="pagehead__body">{copy.intro}</p>
   </section>
 
   <section>
@@ -32,7 +99,7 @@ const systems = [
       out of the box and survives a scripting failure.
     */}
     <fieldset class="switch">
-      <legend class="visually-hidden">Choose a system</legend>
+      <legend class="visually-hidden">{copy.legend}</legend>
       {
         systems.map((system, i) => (
           <>
@@ -59,75 +126,48 @@ const systems = [
                   pipeline.map((stage, i) => (
                     <li class="flow__stage" style={`--i:${i}`}>
                       <span class="flow__step">{stage.step}</span>
-                      <span class="flow__name">{stage.name}</span>
-                      <span class="flow__detail">{stage.detail}</span>
+                      <span class="flow__name">{stage.name[lang]}</span>
+                      <span class="flow__detail">{stage.detail[lang]}</span>
                     </li>
                   ))
                 }
               </ol>
             </div>
-            <figcaption class="figure__caption">
-              Ingestion path — a scrape run fans out across 160+ outlets, dedups
-              against Redis, then hands each article to a local model.
-            </figcaption>
+            <figcaption class="figure__caption">{copy.ingestCaption}</figcaption>
           </figure>
 
           <figure class="figure">
-            <div class="figure__body"><BusTopology /></div>
-            <figcaption class="figure__caption">
-              Event bus topology — producers never call consumers. Adding a
-              consumer means subscribing to a stream, not editing an upstream
-              service.
-            </figcaption>
+            <div class="figure__body"><BusTopology lang={lang} /></div>
+            <figcaption class="figure__caption">{copy.busCaption}</figcaption>
           </figure>
 
           <figure class="figure">
-            <div class="figure__body"><AuthPath /></div>
-            <figcaption class="figure__caption">
-              Request authentication — the gateway is the only component exposed
-              to the internet. Everything behind it trusts the forwarded claims.
-            </figcaption>
+            <div class="figure__body"><AuthPath lang={lang} /></div>
+            <figcaption class="figure__caption">{copy.authCaption}</figcaption>
           </figure>
         </div>
 
         <div class="switch__panel" data-for="compliance">
           <figure class="figure">
-            <div class="figure__body"><ComplianceAgents /></div>
-            <figcaption class="figure__caption">
-              Enrichment flow — classified articles are filtered by regulated
-              sector, run through a catalog of LLM agents in a VRAM-gated batch,
-              and exposed read-only behind a single consumer.
-            </figcaption>
+            <div class="figure__body"><ComplianceAgents lang={lang} /></div>
+            <figcaption class="figure__caption">{copy.agentsCaption}</figcaption>
           </figure>
 
           <div class="panel">
-            <h2>Why it is a separate service</h2>
-            <p class="pagehead__body">
-              Compliance customers are in regulated industries, so their
-              enrichment data cannot share a boundary with the general
-              monitoring product. It gets its own database, its own Ollama
-              instance and exactly one permitted reader.
-            </p>
+            <h2>{copy.separateHeading}</h2>
+            <p class="pagehead__body">{copy.separateBody}</p>
           </div>
         </div>
 
         <div class="switch__panel" data-for="sen">
           <figure class="figure">
-            <div class="figure__body"><SenPipeline /></div>
-            <figcaption class="figure__caption">
-              Police-news pipeline — dedup decision against a 36 hour Redis
-              window before anything reaches the model, because the same wire
-              story appears across a dozen outlets.
-            </figcaption>
+            <div class="figure__body"><SenPipeline lang={lang} /></div>
+            <figcaption class="figure__caption">{copy.senCaption}</figcaption>
           </figure>
 
           <div class="panel">
-            <h2>Constraint that shaped it</h2>
-            <p class="pagehead__body">
-              Delivered to a regional public prosecutor's office. Case-adjacent
-              material cannot go to a third-party API, so the whole stack —
-              database, model, front end — runs in Docker on their own hardware.
-            </p>
+            <h2>{copy.constraintHeading}</h2>
+            <p class="pagehead__body">{copy.constraintBody}</p>
           </div>
         </div>
       </div>
@@ -135,15 +175,12 @@ const systems = [
   </section>
 
   <section>
-    <p class="section__label">Screens</p>
+    <p class="section__label">{copy.screensLabel}</p>
     <div class="panel reveal">
-      <h2>What this looks like from the front.</h2>
-      <p class="pagehead__body">
-        The marketing site, the product and the internal operations panel that
-        watches these pipelines run.
-      </p>
+      <h2>{copy.screensHeading}</h2>
+      <p class="pagehead__body">{copy.screensBody}</p>
       <div class="actions" style="margin-top:2rem">
-        <a class="btn btn--solid" href="/screens/">See the screens</a>
+        <a class="btn btn--solid" href={`${prefix}/screens/`}>{copy.screensCta}</a>
       </div>
     </div>
   </section>

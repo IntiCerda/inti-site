@@ -1,12 +1,32 @@
+---
+import type { Lang } from "../../data/site";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const t = {
+  title: {
+    en: "Traefik verifies every request with forwardAuth, then checks the JWT signature against a cached JWKS instead of calling the identity provider each time.",
+    es: "Traefik verifica cada request con forwardAuth y luego revisa la firma del JWT contra un JWKS cacheado en vez de llamar al proveedor de identidad cada vez.",
+  },
+  client: { en: "Client", es: "Cliente" },
+  cachedKeys: { en: "public keys, cached", es: "llaves públicas, cacheadas" },
+  downstream: { en: "downstream service", es: "servicio interno" },
+  note: {
+    en: "Claims travel in the token, so no service needs a lookup to know the caller's plan.",
+    es: "Los claims viajan en el token, así que ningún servicio necesita un lookup para saber el plan de quien llama.",
+  },
+};
+---
+
 <svg viewBox="0 0 820 250" role="img" aria-labelledby="authTitle">
-  <title id="authTitle">
-    Traefik verifies every request with forwardAuth, then checks the JWT
-    signature against a cached JWKS instead of calling the identity provider
-    each time.
-  </title>
+  <title id="authTitle">{t.title[lang]}</title>
 
   <rect class="dg-box" x="20" y="90" width="130" height="56"></rect>
-  <text class="dg-label" x="34" y="116">Client</text>
+  <text class="dg-label" x="34" y="116">{t.client[lang]}</text>
   <text class="dg-sub" x="34" y="133">JWT bearer</text>
 
   <path class="dg-line" d="M150 118 L235 118"></path>
@@ -22,13 +42,13 @@
   <rect class="dg-box" x="520" y="12" width="160" height="56"></rect>
   <text class="dg-label" x="534" y="38">media-auth</text>
   <text class="dg-sub" x="534" y="55">RS256 · JWKS</text>
-  <text class="dg-note" x="332" y="32">public keys, cached</text>
+  <text class="dg-note" x="332" y="32">{t.cachedKeys[lang]}</text>
 
   <path class="dg-line" d="M410 118 L495 118"></path>
   <path class="dg-line" d="M485 112 L495 118 L485 124"></path>
 
   <rect class="dg-box" x="495" y="90" width="185" height="56"></rect>
-  <text class="dg-label" x="509" y="116">downstream service</text>
+  <text class="dg-label" x="509" y="116">{t.downstream[lang]}</text>
   <text class="dg-sub" x="509" y="133">org_id · plan · rate_limit</text>
 
   <rect class="dg-packet" x="30" y="113" width="9" height="9" style="--to:640px"
@@ -41,8 +61,5 @@
     height="9"
     style="--to:640px;--d:1.6s"></rect>
 
-  <text class="dg-note" x="20" y="200">
-    Claims travel in the token, so no service needs a lookup to know the
-    caller's plan.
-  </text>
+  <text class="dg-note" x="20" y="200">{t.note[lang]}</text>
 </svg>

@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Shot from "../components/Shot.astro";
+import type { Lang } from "../data/site";
 
 import complianceDesktop from "../assets/screens/compliance-monitor.png";
 import complianceMobile from "../assets/screens/compliance-monitor-mobile.png";
@@ -10,59 +11,120 @@ import adminDesktop from "../assets/screens/media-admin.png";
 import adminMobile from "../assets/screens/media-admin-mobile.png";
 import abogadaDesktop from "../assets/screens/javiera-abogada.png";
 import abogadaMobile from "../assets/screens/javiera-abogada-mobile.png";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    title: "Screens — Inti Cerda",
+    description:
+      "Interface captures: Compliance Monitor, the Media Intelligence marketing site, the internal operations panel and a family-law practice landing page.",
+    eyebrow: "Screens",
+    heading: "The front of the systems on the previous page.",
+    intro:
+      "Captured at 1440 and 390 wide. Product surfaces are in Spanish because every user of them is.",
+    productLabel: "Product",
+    internalLabel: "Internal",
+    compliance:
+      "Regulatory monitoring for companies in regulated industries. Serif display type over a navy field, with the live index counts carried straight into the hero.",
+    landingTitle: "Media Intelligence — marketing site",
+    landing:
+      "Marketing surface for the monitoring platform. The hero carries a simulated classification feed so the product's actual output is the first thing a visitor sees.",
+    abogadaTitle: "Javiera Brandt — family law practice",
+    abogada:
+      "Client landing page for a family-law practice in Ovalle. Static Astro build, WhatsApp as the primary conversion path because that is how clients actually make first contact.",
+    adminTitle: "Operations panel — pipeline view",
+    admin:
+      "Internal panel, never exposed publicly. Throughput, classification rate and LLM latency percentiles. Shown here with its offline fallback data, since the panel renders mock values whenever the backend is unreachable.",
+    tags: {
+      live: "Live",
+      static: "Static",
+      internal: "Internal only",
+    },
+  },
+  es: {
+    title: "Pantallas — Inti Cerda",
+    description:
+      "Capturas de interfaz: Compliance Monitor, el sitio de marketing de Media Intelligence, el panel interno de operaciones y una landing para un estudio de derecho de familia.",
+    eyebrow: "Pantallas",
+    heading: "El frente de los sistemas de la página anterior.",
+    intro:
+      "Capturadas a 1440 y 390 de ancho. Las superficies de producto están en español porque todos sus usuarios lo son.",
+    productLabel: "Producto",
+    internalLabel: "Interno",
+    compliance:
+      "Monitoreo regulatorio para empresas de industrias reguladas. Tipografía serif sobre un fondo azul marino, con los conteos del índice en vivo llevados directo al hero.",
+    landingTitle: "Media Intelligence — sitio de marketing",
+    landing:
+      "Superficie de marketing de la plataforma de monitoreo. El hero lleva un feed de clasificación simulado, así lo primero que ve un visitante es el output real del producto.",
+    abogadaTitle: "Javiera Brandt — derecho de familia",
+    abogada:
+      "Landing para un estudio de derecho de familia en Ovalle. Build estático en Astro, con WhatsApp como vía principal de conversión porque así es como los clientes hacen realmente el primer contacto.",
+    adminTitle: "Panel de operaciones — vista de pipeline",
+    admin:
+      "Panel interno, nunca expuesto públicamente. Throughput, tasa de clasificación y percentiles de latencia del LLM. Se muestra con sus datos de respaldo offline, ya que el panel renderiza valores simulados cuando el backend no responde.",
+    tags: {
+      live: "En vivo",
+      static: "Estático",
+      internal: "Solo interno",
+    },
+  },
+}[lang];
 ---
 
-<Base
-  title="Screens — Inti Cerda"
-  description="Interface captures: Compliance Monitor, the Media Intelligence marketing site, the internal operations panel and a family-law practice landing page."
->
+<Base title={copy.title} description={copy.description} lang={lang}>
   <section class="pagehead">
-    <p class="pagehead__eyebrow">Screens</p>
-    <h1>The front of the systems on the previous page.</h1>
-    <p class="pagehead__body">
-      Captured at 1440 and 390 wide. Product surfaces are in Spanish because
-      every user of them is.
-    </p>
+    <p class="pagehead__eyebrow">{copy.eyebrow}</p>
+    <h1>{copy.heading}</h1>
+    <p class="pagehead__body">{copy.intro}</p>
   </section>
 
   <section>
-    <p class="section__label">Product</p>
+    <p class="section__label">{copy.productLabel}</p>
 
     <Shot
       desktop={complianceDesktop}
       mobile={complianceMobile}
       title="Compliance Monitor"
-      caption="Regulatory monitoring for companies in regulated industries. Serif display type over a navy field, with the live index counts carried straight into the hero."
-      tags={["Next.js 15", "Tailwind", "Live"]}
+      caption={copy.compliance}
+      tags={["Next.js 15", "Tailwind", copy.tags.live]}
       href="https://compliancemonitor.cl"
+      lang={lang}
     />
 
     <Shot
       desktop={landingDesktop}
       mobile={landingMobile}
-      title="Media Intelligence — marketing site"
-      caption="Marketing surface for the monitoring platform. The hero carries a simulated classification feed so the product's actual output is the first thing a visitor sees."
+      title={copy.landingTitle}
+      caption={copy.landing}
       tags={["Next.js 15", "Framer Motion", "Tailwind v4"]}
+      lang={lang}
     />
 
     <Shot
       desktop={abogadaDesktop}
       mobile={abogadaMobile}
-      title="Javiera Brandt — family law practice"
-      caption="Client landing page for a family-law practice in Ovalle. Static Astro build, WhatsApp as the primary conversion path because that is how clients actually make first contact."
-      tags={["Astro", "Tailwind v4", "Static"]}
+      title={copy.abogadaTitle}
+      caption={copy.abogada}
+      tags={["Astro", "Tailwind v4", copy.tags.static]}
+      lang={lang}
     />
   </section>
 
   <section>
-    <p class="section__label">Internal</p>
+    <p class="section__label">{copy.internalLabel}</p>
 
     <Shot
       desktop={adminDesktop}
       mobile={adminMobile}
-      title="Operations panel — pipeline view"
-      caption="Internal panel, never exposed publicly. Throughput, classification rate and LLM latency percentiles. Shown here with its offline fallback data, since the panel renders mock values whenever the backend is unreachable."
-      tags={["Next.js 15", "Server Components", "Internal only"]}
+      title={copy.adminTitle}
+      caption={copy.admin}
+      tags={["Next.js 15", "Server Components", copy.tags.internal]}
+      lang={lang}
     />
   </section>
 </Base>

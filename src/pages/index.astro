@@ -1,78 +1,122 @@
 ---
 import Base from "../layouts/Base.astro";
-import { services, stats } from "../data/site";
+import { services, stats, type Lang } from "../data/site";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    title: "Inti Cerda — Backend Engineer & Freelance Developer",
+    description:
+      "Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines, and full-stack product delivery — freelance and contract work.",
+    eyebrow: "Backend Engineer · Freelance · Coquimbo, Chile",
+    heroBody:
+      "I design and ship event-driven systems end to end — ingestion, classification, API, dashboard, auth and billing. Most of it runs local LLMs on hardware I control, because the data usually cannot leave the building.",
+    seeWork: "See the work",
+    seeArchitecture: "How it fits together",
+    hireMe: "Hire me",
+    readout: [
+      ["Based", "Coquimbo, CL"],
+      ["Zone", "UTC−4"],
+      ["Status", "Open to work"],
+      ["Mode", "Remote · Contract"],
+      ["Core", "Python · TypeScript · Go"],
+      ["Focus", "Event-driven · Local LLM"],
+      ["Langs", "Español · English"],
+    ],
+    statsLabel: "In production right now",
+    servicesLabel: "What I do",
+    backgroundLabel: "Background",
+    degree: "Computer Engineering, Universidad Católica del Norte",
+    bio1: "I started with compilers and C++ coursework, moved through Go and TypeScript backends, and ended up building a 16-service platform on my own. The through-line is that I like the parts other people find tedious: the message bus, the retry logic, the thing that wakes you at 3am if you got it wrong.",
+    bio2: "Most of my current work lives in private repositories — it is a commercial product with customer data. What is public is the architecture behind it, and I am happy to walk through the rest.",
+  },
+  es: {
+    title: "Inti Cerda — Ingeniero Backend y Desarrollador Freelance",
+    description:
+      "Ingeniero backend en Coquimbo, Chile. Microservicios event-driven, pipelines de LLM locales y entrega de producto full-stack — trabajo freelance y por contrato.",
+    eyebrow: "Ingeniero Backend · Freelance · Coquimbo, Chile",
+    heroBody:
+      "Diseño y entrego sistemas event-driven de punta a punta — ingesta, clasificación, API, dashboard, auth y cobros. La mayoría corre LLMs locales en hardware que controlo, porque los datos normalmente no pueden salir del edificio.",
+    seeWork: "Ver el trabajo",
+    seeArchitecture: "Cómo encaja todo",
+    hireMe: "Contrátame",
+    readout: [
+      ["Base", "Coquimbo, CL"],
+      ["Zona", "UTC−4"],
+      ["Estado", "Disponible"],
+      ["Modo", "Remoto · Contrato"],
+      ["Core", "Python · TypeScript · Go"],
+      ["Foco", "Event-driven · LLM local"],
+      ["Idiomas", "Español · English"],
+    ],
+    statsLabel: "En producción ahora mismo",
+    servicesLabel: "Qué hago",
+    backgroundLabel: "Trayectoria",
+    degree: "Ingeniería en Computación, Universidad Católica del Norte",
+    bio1: "Partí con compiladores y ramos de C++, pasé por backends en Go y TypeScript, y terminé construyendo solo una plataforma de 16 servicios. El hilo conductor es que me gustan las partes que a otros les parecen tediosas: el bus de mensajes, la lógica de reintentos, eso que te despierta a las 3am si lo hiciste mal.",
+    bio2: "La mayor parte de mi trabajo actual vive en repositorios privados — es un producto comercial con datos de clientes. Lo público es la arquitectura que hay detrás, y con gusto recorro el resto contigo.",
+  },
+}[lang];
+
+const prefix = lang === "es" ? "/es" : "";
 ---
 
-<Base
-  title="Inti Cerda — Backend Engineer & Freelance Developer"
-  description="Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines, and full-stack product delivery — freelance and contract work."
->
+<Base title={copy.title} description={copy.description} lang={lang}>
   <section class="hero">
     <div class="panel hero__panel">
       <div>
-        <p class="pagehead__eyebrow">
-          Backend Engineer · Freelance · Coquimbo, Chile
-        </p>
+        <p class="pagehead__eyebrow">{copy.eyebrow}</p>
         <h1 class="t-display hero__title">
-          I build the<br />pipeline <span class="hero__amp">&amp;</span> the<br
-          />screen it feeds.
+          {
+            lang === "en" ? (
+              <>
+                I build the<br />pipeline <span class="hero__amp">&amp;</span>{" "}
+                the<br />screen it feeds.
+              </>
+            ) : (
+              <>
+                Construyo el<br />pipeline <span class="hero__amp">&amp;</span>{" "}
+                la<br />pantalla que alimenta.
+              </>
+            )
+          }
         </h1>
-        <p class="hero__body">
-          I design and ship event-driven systems end to end — ingestion,
-          classification, API, dashboard, auth and billing. Most of it runs
-          local LLMs on hardware I control, because the data usually cannot
-          leave the building.
-        </p>
+        <p class="hero__body">{copy.heroBody}</p>
         <div class="actions">
-          <a class="btn" href="/work/">See the work</a>
-          <a class="btn" href="/architecture/">How it fits together</a>
+          <a class="btn" href={`${prefix}/work/`}>{copy.seeWork}</a>
+          <a class="btn" href={`${prefix}/architecture/`}>{copy.seeArchitecture}</a>
           <a class="btn btn--solid" href="mailto:inti.cerda.r@gmail.com">
-            Hire me
+            {copy.hireMe}
           </a>
         </div>
       </div>
 
       <dl class="readout">
-        <div class="readout__row">
-          <dt>Based</dt>
-          <dd>Coquimbo, CL</dd>
-        </div>
-        <div class="readout__row">
-          <dt>Zone</dt>
-          <dd>UTC−4</dd>
-        </div>
-        <div class="readout__row">
-          <dt>Status</dt>
-          <dd>Open to work</dd>
-        </div>
-        <div class="readout__row">
-          <dt>Mode</dt>
-          <dd>Remote · Contract</dd>
-        </div>
-        <div class="readout__row">
-          <dt>Core</dt>
-          <dd>Python · TypeScript · Go</dd>
-        </div>
-        <div class="readout__row">
-          <dt>Focus</dt>
-          <dd>Event-driven · Local LLM</dd>
-        </div>
-        <div class="readout__row">
-          <dt>Langs</dt>
-          <dd>Español · English</dd>
-        </div>
+        {
+          copy.readout.map(([term, detail]) => (
+            <div class="readout__row">
+              <dt>{term}</dt>
+              <dd>{detail}</dd>
+            </div>
+          ))
+        }
       </dl>
     </div>
   </section>
 
   <section>
-    <p class="section__label">In production right now</p>
+    <p class="section__label">{copy.statsLabel}</p>
     <div class="stats reveal">
       {
         stats.map((stat) => (
           <div class="stat">
             <p class="stat__value"><span data-count={stat.value}>{stat.value}</span>{stat.suffix}</p>
-            <p class="stat__label">{stat.label}</p>
+            <p class="stat__label">{stat.label[lang]}</p>
           </div>
         ))
       }
@@ -80,15 +124,15 @@ import { services, stats } from "../data/site";
   </section>
 
   <section>
-    <p class="section__label">What I do</p>
-    <div class="cards">
+    <p class="section__label">{copy.servicesLabel}</p>
+    <div class="cards cards--duo">
       {
         services.map((service) => (
           <article class="card reveal">
-            <h2>{service.title}</h2>
-            <p class="card__body">{service.body}</p>
+            <h2>{service.title[lang]}</h2>
+            <p class="card__body">{service.body[lang]}</p>
             <ul class="tags">
-              {service.points.map((point) => (
+              {service.points[lang].map((point) => (
                 <li class="tag">{point}</li>
               ))}
             </ul>
@@ -99,21 +143,11 @@ import { services, stats } from "../data/site";
   </section>
 
   <section>
-    <p class="section__label">Background</p>
+    <p class="section__label">{copy.backgroundLabel}</p>
     <div class="panel reveal">
-      <h2>Computer Engineering, Universidad Católica del Norte</h2>
-      <p class="pagehead__body">
-        I started with compilers and C++ coursework, moved through Go and
-        TypeScript backends, and ended up building a 16-service platform on my
-        own. The through-line is that I like the parts other people find
-        tedious: the message bus, the retry logic, the thing that wakes you at
-        3am if you got it wrong.
-      </p>
-      <p class="pagehead__body">
-        Most of my current work lives in private repositories — it is a
-        commercial product with customer data. What is public is the
-        architecture behind it, and I am happy to walk through the rest.
-      </p>
+      <h2>{copy.degree}</h2>
+      <p class="pagehead__body">{copy.bio1}</p>
+      <p class="pagehead__body">{copy.bio2}</p>
       <div class="actions" style="margin-top:2rem">
         <a class="btn" href="https://github.com/IntiCerda">GitHub</a>
         <a class="btn" href="https://www.linkedin.com/in/inti-cerda/">
@@ -150,7 +184,7 @@ import { services, stats } from "../data/site";
 
   .readout__row {
     display: grid;
-    grid-template-columns: 4rem 1fr;
+    grid-template-columns: 4.5rem 1fr;
     gap: 0.625rem;
     padding: 0.625rem 0.875rem;
     border-bottom: 1px solid var(--rule);
