@@ -1,0 +1,46 @@
+---
+// One 404 serves both locales: the URL that got here could be either, so the
+// page speaks both without picking a side.
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="404 — Inti Cerda"
+  description="Page not found. Página no encontrada."
+>
+  <section class="lost">
+    <div class="panel lost__panel">
+      <p class="lost__code" aria-hidden="true">404</p>
+      <h1>This page doesn't exist.</h1>
+      <p class="pagehead__body">
+        The event was published, but no consumer picked it up. — La página que
+        buscas no existe o cambió de lugar.
+      </p>
+      <div class="actions" style="margin-top:2rem">
+        <a class="btn btn--solid" href="/">← Home</a>
+        <a class="btn" href="/es/">← Inicio</a>
+        <a class="btn" href="/work/">Work</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    margin-top: 3.5rem;
+  }
+
+  .lost__code {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(4rem, 2rem + 9vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin: 0 0 1rem;
+    color: var(--muted);
+  }
+
+  .lost__panel h1 {
+    margin-bottom: 1rem;
+  }
+</style>
