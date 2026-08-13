@@ -76,19 +76,19 @@ export const stats: { value: number; suffix: string; label: L }[] = [
     label: { en: "Services in production", es: "Servicios en producción" },
   },
   {
-    value: 160,
-    suffix: "+",
-    label: { en: "Outlets ingested", es: "Medios ingestados" },
-  },
-  {
-    value: 3800,
-    suffix: "+",
-    label: { en: "Articles classified daily", es: "Artículos clasificados al día" },
-  },
-  {
-    value: 16,
+    value: 133,
     suffix: "",
-    label: { en: "Regions covered", es: "Regiones cubiertas" },
+    label: { en: "Outlets monitored", es: "Medios monitoreados" },
+  },
+  {
+    value: 11000,
+    suffix: "+",
+    label: { en: "Articles classified", es: "Artículos clasificados" },
+  },
+  {
+    value: 8500,
+    suffix: "+",
+    label: { en: "Entities resolved", es: "Entidades resueltas" },
   },
 ];
 
@@ -96,7 +96,7 @@ export const pipeline: { step: string; name: L; detail: L }[] = [
   {
     step: "01",
     name: { en: "Ingest", es: "Ingesta" },
-    detail: { en: "Playwright · 160+ outlets", es: "Playwright · 160+ medios" },
+    detail: { en: "Playwright · 133 outlets", es: "Playwright · 133 medios" },
   },
   {
     step: "02",
@@ -139,8 +139,8 @@ export const projects: {
     meta: { en: "2025 — present", es: "2025 — presente" },
     kind: { en: "Event-driven SaaS", es: "SaaS event-driven" },
     body: {
-      en: "A national media-monitoring platform for the Chilean market, built as 16 services. It ingests news from 160+ outlets, classifies it with local LLMs, extracts entities and facts, and turns that into alerts, dashboards and compliance reports.",
-      es: "Una plataforma nacional de monitoreo de medios para el mercado chileno, construida como 16 servicios. Ingesta noticias de 160+ medios, las clasifica con LLMs locales, extrae entidades y hechos, y convierte eso en alertas, dashboards e informes de compliance.",
+      en: "A national media-monitoring platform for the Chilean market, built as 16 services. It ingests news from 133 outlets, classifies it with local LLMs, extracts entities and facts, and turns that into alerts, dashboards and compliance reports.",
+      es: "Una plataforma nacional de monitoreo de medios para el mercado chileno, construida como 16 servicios. Ingesta noticias de 133 medios, las clasifica con LLMs locales, extrae entidades y hechos, y convierte eso en alertas, dashboards e informes de compliance.",
     },
     role: {
       en: "Sole architect and engineer across all 16 repositories.",
