@@ -52,8 +52,8 @@ export const services: {
       es: "La cadena completa, no una sola capa: ingesta, API, dashboard, auth, cobros y el deploy que lo pone frente a un cliente.",
     },
     points: {
-      en: ["Next.js 15 dashboards", "JWT / JWKS auth", "Stripe subscriptions", "Docker & Traefik"],
-      es: ["Dashboards en Next.js 15", "Auth JWT / JWKS", "Suscripciones con Stripe", "Docker y Traefik"],
+      en: ["Next.js 15 dashboards", "JWT / JWKS auth", "Flow.cl subscriptions", "Docker & Traefik"],
+      es: ["Dashboards en Next.js 15", "Auth JWT / JWKS", "Suscripciones con Flow.cl", "Docker y Traefik"],
     },
   },
   {
@@ -146,7 +146,7 @@ export const projects: {
       en: "Sole architect and engineer across all 16 repositories.",
       es: "Único arquitecto e ingeniero en los 16 repositorios.",
     },
-    tags: ["FastAPI", "Redis Streams", "pgvector", "Next.js 15", "Stripe", "Traefik"],
+    tags: ["FastAPI", "Redis Streams", "pgvector", "Next.js 15", "Flow.cl", "Traefik"],
     links: [
       {
         label: { en: "Architecture writeup", es: "Writeup de arquitectura" },
