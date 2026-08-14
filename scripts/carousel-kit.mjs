@@ -104,11 +104,28 @@ export const brandMark = (label, slug, x, y, box = 84) => {
   ${caption}`;
 };
 
-export const frame = ({ eyebrow, n, total, footer, body }) => `
+// The dark frame takes an optional palette so a deck can wear the colours of
+// the product it is about instead of a third invented scheme.
+export const NAVY = {
+  bg: "#131f36",
+  ink: "#f2ede1",
+  muted: "#8f9bb3",
+  rule: "#2b3b5c",
+  accent: "#c9a227",
+  dot: "#1c2c4a",
+};
+
+export const frame = ({ eyebrow, n, total, footer, body, theme }) => {
+  const bg = theme?.bg ?? "#0b0b0c";
+  const ink = theme?.ink ?? FG;
+  const muted = theme?.muted ?? MUTED;
+  const rule = theme?.rule ?? RULE;
+  const dot = theme?.dot ?? "#2c2c2e";
+  return `
 <svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <pattern id="tone" width="12" height="12" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.3" fill="#2c2c2e"/>
+      <circle cx="2" cy="2" r="1.3" fill="${dot}"/>
     </pattern>
     <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#fff" stop-opacity="1"/>
@@ -117,19 +134,20 @@ export const frame = ({ eyebrow, n, total, footer, body }) => `
     <mask id="toneMask"><rect width="${W}" height="${W}" fill="url(#fade)"/></mask>
   </defs>
 
-  <rect width="${W}" height="${W}" fill="#0b0b0c"/>
+  <rect width="${W}" height="${W}" fill="${bg}"/>
   <rect width="${W}" height="${W}" fill="url(#tone)" mask="url(#toneMask)"/>
-  <rect x="16" y="16" width="${W - 32}" height="${W - 32}" fill="none" stroke="${FG}" stroke-width="3"/>
+  <rect x="16" y="16" width="${W - 32}" height="${W - 32}" fill="none" stroke="${ink}" stroke-width="3"/>
 
-  <rect x="64" y="96" width="16" height="16" fill="${FG}"/>
-  <text x="96" y="110" font-family="${MONO}" font-size="19" letter-spacing="3" fill="${MUTED}">${esc(eyebrow)}</text>
+  <rect x="64" y="96" width="16" height="16" fill="${theme?.accent ?? ink}"/>
+  <text x="96" y="110" font-family="${MONO}" font-size="19" letter-spacing="3" fill="${muted}">${esc(eyebrow)}</text>
 
   ${body}
 
-  <line x1="64" y1="1080" x2="${W - 64}" y2="1080" stroke="${RULE}" stroke-width="2"/>
-  <text x="64" y="1118" font-family="${MONO}" font-size="18" letter-spacing="2" fill="${MUTED}">${esc(footer)}</text>
-  <text x="${W - 64}" y="1118" text-anchor="end" font-family="${MONO}" font-size="18" letter-spacing="2" fill="${MUTED}">${n} / ${total}</text>
+  <line x1="64" y1="1080" x2="${W - 64}" y2="1080" stroke="${rule}" stroke-width="2"/>
+  <text x="64" y="1118" font-family="${MONO}" font-size="18" letter-spacing="2" fill="${muted}">${esc(footer)}</text>
+  <text x="${W - 64}" y="1118" text-anchor="end" font-family="${MONO}" font-size="18" letter-spacing="2" fill="${muted}">${n} / ${total}</text>
 </svg>`;
+};
 
 // ---------------------------------------------------------------------------
 // Paper theme. A second visual system, not a recolour of the first: no dot
