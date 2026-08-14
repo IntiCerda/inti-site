@@ -12,7 +12,9 @@ export const nav: { href: string; label: L }[] = [
   { href: "/stack/", label: { en: "Stack", es: "Stack" } },
 ];
 
-export const services: {
+// Written as what I have built and how I work, not as a services menu — the
+// audience here is a hiring team, not a buyer.
+export const capabilities: {
   title: L;
   body: L;
   points: Record<Lang, string[]>;
@@ -34,8 +36,8 @@ export const services: {
   {
     title: { en: "AI & LLM pipelines", es: "IA y pipelines de LLM" },
     body: {
-      en: "Classification and extraction that runs on your own hardware. No per-token bill, no data leaving the building — local models, batched and gated by VRAM.",
-      es: "Clasificación y extracción corriendo en tu propio hardware. Sin cobro por token y sin datos saliendo del edificio — modelos locales, en batch y regulados por VRAM.",
+      en: "Classification and extraction running on self-hosted hardware. No per-token bill, no data leaving the building — local models, batched and gated by VRAM.",
+      es: "Clasificación y extracción corriendo en hardware propio. Sin cobro por token y sin datos saliendo del edificio — modelos locales, en batch y regulados por VRAM.",
     },
     points: {
       en: ["Ollama, local inference", "Embeddings & semantic search", "Entity and fact extraction", "MCP tooling"],
@@ -48,8 +50,8 @@ export const services: {
       es: "Entrega de producto full-stack",
     },
     body: {
-      en: "The whole chain, not just one layer: ingestion, API, dashboard, auth, billing and the deploy that puts it in front of a customer.",
-      es: "La cadena completa, no una sola capa: ingesta, API, dashboard, auth, cobros y el deploy que lo pone frente a un cliente.",
+      en: "The whole chain, not just one layer: ingestion, API, dashboard, auth, billing and the deploy that puts it in production.",
+      es: "La cadena completa, no una sola capa: ingesta, API, dashboard, auth, cobros y el deploy que lo pone en producción.",
     },
     points: {
       en: ["Next.js 15 dashboards", "JWT / JWKS auth", "Flow.cl subscriptions", "Docker & Traefik"],
@@ -57,10 +59,10 @@ export const services: {
     },
   },
   {
-    title: { en: "Freelance & consulting", es: "Freelance y consultoría" },
+    title: { en: "Ownership & collaboration", es: "Autonomía y equipo" },
     body: {
-      en: "Delivered for a regional public prosecutor's office and for private clients. Comfortable owning a project from the first conversation to production.",
-      es: "Con entregas para una fiscalía regional y para clientes privados. Cómodo llevando un proyecto desde la primera conversación hasta producción.",
+      en: "I take a problem from the first conversation to something running in production, and I write down the decisions on the way. Delivered that way for a regional public prosecutor's office and on my own products.",
+      es: "Llevo un problema desde la primera conversación hasta algo corriendo en producción, y dejo las decisiones escritas en el camino. Así entregué para una fiscalía regional y en mis propios productos.",
     },
     points: {
       en: ["Scoping & architecture", "Solo or embedded in a team", "Spanish & English", "Remote, UTC-4"],
@@ -157,7 +159,7 @@ export const projects: {
   {
     name: "Compliance Monitor",
     meta: { en: "2025 — present", es: "2025 — presente" },
-    kind: { en: "Commercial product", es: "Producto comercial" },
+    kind: { en: "Personal product", es: "Producto propio" },
     body: {
       en: "Reputational-risk and regulatory monitoring for companies in regulated industries, on the same ingestion engine with its own auth boundary. A dedicated agent service runs a catalog of LLM enrichments over classified articles in a VRAM-gated batch.",
       es: "Monitoreo de riesgo reputacional y regulatorio para empresas de industrias reguladas, sobre el mismo motor de ingesta con su propia frontera de auth. Un servicio de agentes dedicado corre un catálogo de enriquecimientos LLM sobre los artículos clasificados en un batch regulado por VRAM.",
@@ -186,8 +188,8 @@ export const projects: {
       es: "Pipeline de scraping y clasificación con IA para análisis de noticias policiales, entregado a una fiscalía regional. Totalmente contenedorizado, con dedup de 36h en Redis y un modelo local haciendo la clasificación.",
     },
     role: {
-      en: "Delivered end to end as a freelance engagement.",
-      es: "Entregado de punta a punta como trabajo freelance.",
+      en: "Capstone project and professional internship, delivered end to end.",
+      es: "Proyecto de título y práctica profesional, entregado de punta a punta.",
     },
     tags: ["Docker", "Prisma", "Redis", "Ollama", "Next.js"],
     links: [],

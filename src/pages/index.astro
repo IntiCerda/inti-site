@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { services, stats, type Lang } from "../data/site";
+import { capabilities, stats, type Lang } from "../data/site";
 
 interface Props {
   lang?: Lang;
@@ -10,56 +10,56 @@ const { lang = "en" } = Astro.props;
 
 const copy = {
   en: {
-    title: "Inti Cerda — Backend Engineer & Freelance Developer",
+    title: "Inti Cerda — Backend Engineer",
     description:
-      "Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines, and full-stack product delivery — freelance and contract work.",
-    eyebrow: "Backend Engineer · Freelance · Coquimbo, Chile",
+      "Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines and full-stack product delivery, shipped to production.",
+    eyebrow: "Backend Engineer · Coquimbo, Chile",
     heroBody:
       "I design and ship event-driven systems end to end — ingestion, classification, API, dashboard, auth and billing. Most of it runs local LLMs on hardware I control, because the data usually cannot leave the building.",
     seeWork: "See the work",
     seeArchitecture: "How it fits together",
-    hireMe: "Hire me",
+    hireMe: "Get in touch",
     readout: [
       ["Based", "Coquimbo, CL"],
       ["Zone", "UTC−4"],
       ["Status", "Open to work"],
-      ["Mode", "Remote · Contract"],
+      ["Mode", "Remote · Full or part-time"],
       ["Core", "Python · TypeScript · Go"],
       ["Focus", "Event-driven · Local LLM"],
       ["Langs", "Español · English"],
     ],
     statsLabel: "In production right now",
-    servicesLabel: "What I do",
+    servicesLabel: "How I work",
     backgroundLabel: "Background",
     degree: "Computer Engineering, Universidad Católica del Norte",
     bio1: "I started with compilers and C++ coursework, moved through Go and TypeScript backends, and ended up building a 16-service platform on my own. The through-line is that I like the parts other people find tedious: the message bus, the retry logic, the thing that wakes you at 3am if you got it wrong.",
-    bio2: "Most of my current work lives in private repositories — it is a commercial product with customer data. What is public is the architecture behind it, and I am happy to walk through the rest.",
+    bio2: "Most of my current work lives in private repositories — products of my own that are still being built out. What is public is the architecture behind them, and I am happy to walk through the rest.",
   },
   es: {
-    title: "Inti Cerda — Ingeniero Backend y Desarrollador Freelance",
+    title: "Inti Cerda — Ingeniero Backend",
     description:
-      "Ingeniero backend en Coquimbo, Chile. Microservicios event-driven, pipelines de LLM locales y entrega de producto full-stack — trabajo freelance y por contrato.",
-    eyebrow: "Ingeniero Backend · Freelance · Coquimbo, Chile",
+      "Ingeniero backend en Coquimbo, Chile. Microservicios event-driven, pipelines de LLM locales y entrega de producto full-stack, llevados a producción.",
+    eyebrow: "Ingeniero Backend · Coquimbo, Chile",
     heroBody:
       "Diseño y entrego sistemas event-driven de punta a punta — ingesta, clasificación, API, dashboard, auth y cobros. La mayoría corre LLMs locales en hardware que controlo, porque los datos normalmente no pueden salir del edificio.",
     seeWork: "Ver el trabajo",
     seeArchitecture: "Cómo encaja todo",
-    hireMe: "Contrátame",
+    hireMe: "Hablemos",
     readout: [
       ["Base", "Coquimbo, CL"],
       ["Zona", "UTC−4"],
       ["Estado", "Disponible"],
-      ["Modo", "Remoto · Contrato"],
+      ["Modo", "Remoto · Jornada completa o parcial"],
       ["Core", "Python · TypeScript · Go"],
       ["Foco", "Event-driven · LLM local"],
       ["Idiomas", "Español · English"],
     ],
     statsLabel: "En producción ahora mismo",
-    servicesLabel: "Qué hago",
+    servicesLabel: "Cómo trabajo",
     backgroundLabel: "Trayectoria",
     degree: "Ingeniería en Computación, Universidad Católica del Norte",
     bio1: "Partí con compiladores y ramos de C++, pasé por backends en Go y TypeScript, y terminé construyendo solo una plataforma de 16 servicios. El hilo conductor es que me gustan las partes que a otros les parecen tediosas: el bus de mensajes, la lógica de reintentos, eso que te despierta a las 3am si lo hiciste mal.",
-    bio2: "La mayor parte de mi trabajo actual vive en repositorios privados — es un producto comercial con datos de clientes. Lo público es la arquitectura que hay detrás, y con gusto recorro el resto contigo.",
+    bio2: "La mayor parte de mi trabajo actual vive en repositorios privados — productos propios que sigo construyendo. Lo público es la arquitectura que hay detrás, y con gusto recorro el resto contigo.",
   },
 }[lang];
 
@@ -127,7 +127,7 @@ const prefix = lang === "es" ? "/es" : "";
     <p class="section__label">{copy.servicesLabel}</p>
     <div class="cards cards--duo">
       {
-        services.map((service) => (
+        capabilities.map((service) => (
           <article class="card reveal">
             <h2>{service.title[lang]}</h2>
             <p class="card__body">{service.body[lang]}</p>
