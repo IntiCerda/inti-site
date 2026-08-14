@@ -157,6 +157,26 @@ export const projects: {
     ],
   },
   {
+    name: "VitrinaApp",
+    meta: { en: "2026 — present", es: "2026 — presente" },
+    kind: { en: "Live product", es: "Producto en producción" },
+    body: {
+      en: "Point of sale and stock control for Chilean corner shops: register, inventory, expiry alerts, promotions and store credit, on three paid tiers. One codebase runs in the cloud and as an offline desktop install, substituting three modules at build time and nothing else.",
+      es: "Punto de venta y control de stock para almacenes chilenos: caja, inventario, alertas de vencimiento, promociones y fiado, en tres planes pagos. Un mismo código corre en la nube y como instalación de escritorio sin internet, sustituyendo tres módulos en el build y nada más.",
+    },
+    role: {
+      en: "Built with a co-developer; shared product and architecture.",
+      es: "Construido junto a otro desarrollador; producto y arquitectura compartidos.",
+    },
+    tags: ["SvelteKit", "Drizzle", "PGlite", "Supabase", "Electron", "TypeScript"],
+    links: [
+      {
+        label: { en: "vitrina-app.com", es: "vitrina-app.com" },
+        href: "https://www.vitrina-app.com/",
+      },
+    ],
+  },
+  {
     name: "Compliance Monitor",
     meta: { en: "2025 — present", es: "2025 — presente" },
     kind: { en: "Personal product", es: "Producto propio" },
