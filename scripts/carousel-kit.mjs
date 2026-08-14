@@ -45,11 +45,11 @@ export const para = (text, x, y, size, color = FG, maxW = W - 128, lh = size * 1
     )
     .join("");
 
-export const headline = (lines, y, size = 54) =>
+export const headline = (lines, y, size = 54, color = FG, x = 64) =>
   lines
     .map(
       (l, i) =>
-        `<text x="64" y="${y + i * (size * 1.15)}" font-family="${SERIF}" font-weight="bold" font-size="${size}" fill="${FG}">${esc(l)}</text>`
+        `<text x="${x}" y="${y + i * (size * 1.15)}" font-family="${SERIF}" font-weight="bold" font-size="${size}" fill="${color}">${esc(l)}</text>`
     )
     .join("");
 
@@ -129,6 +129,62 @@ export const frame = ({ eyebrow, n, total, footer, body }) => `
   <line x1="64" y1="1080" x2="${W - 64}" y2="1080" stroke="${RULE}" stroke-width="2"/>
   <text x="64" y="1118" font-family="${MONO}" font-size="18" letter-spacing="2" fill="${MUTED}">${esc(footer)}</text>
   <text x="${W - 64}" y="1118" text-anchor="end" font-family="${MONO}" font-size="18" letter-spacing="2" fill="${MUTED}">${n} / ${total}</text>
+</svg>`;
+
+// ---------------------------------------------------------------------------
+// Paper theme. A second visual system, not a recolour of the first: no dot
+// texture, no boxed border, sans body copy, and an accent that carries the one
+// thing each page is about. Decks alternate between the two so a reader who
+// follows the profile is not looking at the same page seven more times.
+// ---------------------------------------------------------------------------
+export const PAPER = {
+  bg: "#f2efe9",
+  ink: "#16150f",
+  muted: "#6f6b5e",
+  rule: "#cfc9bc",
+  accent: "#b8412b",
+};
+export const SANS = "Segoe UI, Helvetica, Arial, sans-serif";
+
+export const sans = (text, x, y, size, color, maxW = W - 128, lh = size * 1.5) =>
+  wrap(text, size, maxW, 0.5)
+    .map(
+      (l, i) =>
+        `<text x="${x}" y="${y + i * lh}" font-family="${SANS}" font-size="${size}" fill="${color}">${esc(l)}</text>`
+    )
+    .join("");
+
+// A vertical spine with numbered stops. Reads top-to-bottom, which is the
+// direction a phone scrolls — boxes and arrows do not survive the thumbnail.
+export const flow = (stops, { x = 190, y = 300, pitch = 108, highlight = -1 } = {}) => {
+  const lastY = y + (stops.length - 1) * pitch;
+  return `
+  <line x1="${x}" y1="${y}" x2="${x}" y2="${lastY}" stroke="${PAPER.rule}" stroke-width="2"/>
+  ${stops
+    .map(([name, detail], i) => {
+      const cy = y + i * pitch;
+      const on = i === highlight;
+      const colour = on ? PAPER.accent : PAPER.ink;
+      return `
+  <circle cx="${x}" cy="${cy}" r="${on ? 11 : 7}" fill="${on ? PAPER.accent : PAPER.ink}"/>
+  <text x="${x - 40}" y="${cy + 8}" text-anchor="end" font-family="${MONO}" font-size="21" fill="${PAPER.muted}">${String(i + 1).padStart(2, "0")}</text>
+  <text x="${x + 40}" y="${cy - 2}" font-family="${SERIF}" font-weight="bold" font-size="31" fill="${colour}">${esc(name)}</text>
+  <text x="${x + 40}" y="${cy + 28}" font-family="${SANS}" font-size="21" fill="${PAPER.muted}">${esc(detail)}</text>`;
+    })
+    .join("")}`;
+};
+
+export const paperFrame = ({ eyebrow, n, total, footer, body }) => `
+<svg width="${W}" height="${W}" viewBox="0 0 ${W} ${W}" xmlns="http://www.w3.org/2000/svg">
+  <rect width="${W}" height="${W}" fill="${PAPER.bg}"/>
+
+  <text x="64" y="112" font-family="${SANS}" font-size="20" letter-spacing="4" fill="${PAPER.muted}">${esc(eyebrow)}</text>
+  <line x1="64" y1="140" x2="${W - 64}" y2="140" stroke="${PAPER.rule}" stroke-width="2"/>
+
+  ${body}
+
+  <text x="64" y="1130" font-family="${SANS}" font-size="19" letter-spacing="2" fill="${PAPER.muted}">${esc(footer)}</text>
+  <text x="${W - 64}" y="1136" text-anchor="end" font-family="${SERIF}" font-size="40" fill="${PAPER.rule}">${n}<tspan font-size="20" fill="${PAPER.rule}">/${total}</tspan></text>
 </svg>`;
 
 // Emits one PNG per page (useful on their own) and assembles the carousel PDF.
