@@ -28,7 +28,7 @@ const svg = `
 
   <!-- Section marker square + rule, straight from the site's label grammar. -->
   <rect x="88" y="118" width="18" height="18" fill="#ededea"/>
-  <text x="126" y="134" font-family="Consolas, monospace" font-size="26" letter-spacing="6" fill="#8e8e88">BACKEND ENGINEER · FREELANCE</text>
+  <text x="126" y="134" font-family="Consolas, monospace" font-size="26" letter-spacing="6" fill="#8e8e88">BACKEND ENGINEER · DISTRIBUTED SYSTEMS</text>
 
   <text x="84" y="292" font-family="Georgia, serif" font-weight="bold" font-size="132" letter-spacing="-3" fill="#ededea">Inti Cerda</text>
 
