@@ -215,6 +215,23 @@ export const projects: {
     links: [],
   },
   {
+    name: "jobscan",
+    meta: { en: "2026", es: "2026" },
+    kind: { en: "Open source", es: "Open source" },
+    body: {
+      en: "Ranks job postings against a profile you describe once, so the daily question is what appeared since yesterday. Local embeddings score each posting against a prose summary; knockouts drop the ones not worth opening, using the board's own quality flags. Standard library only — no dependencies at all.",
+      es: "Puntúa ofertas de trabajo contra un perfil que describís una vez, para que la pregunta diaria sea qué apareció desde ayer. Embeddings locales comparan cada aviso con un resumen en prosa, y los filtros duros descartan lo que no vale abrir usando las propias señales de calidad del portal. Solo biblioteca estándar, cero dependencias.",
+    },
+    role: { en: "Author.", es: "Autor." },
+    tags: ["Python", "Ollama", "Embeddings", "SQLite", "http.server"],
+    links: [
+      {
+        label: { en: "Source", es: "Código" },
+        href: "https://github.com/IntiCerda/jobscan",
+      },
+    ],
+  },
+  {
     name: "ai-job-search",
     meta: { en: "2025", es: "2025" },
     kind: { en: "Open source", es: "Open source" },
