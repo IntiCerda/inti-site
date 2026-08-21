@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { workSchema } from "../data/seo";
 import { projects, type Lang } from "../data/site";
 
 interface Props {
@@ -40,7 +41,12 @@ const copy = {
 }[lang];
 ---
 
-<Base title={copy.title} description={copy.description} lang={lang}>
+<Base
+  title={copy.title}
+  description={copy.description}
+  lang={lang}
+  jsonLd={workSchema(Astro.site, lang)}
+>
   <section class="pagehead">
     <p class="pagehead__eyebrow">{copy.eyebrow}</p>
     <h1>{copy.heading}</h1>

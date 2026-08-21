@@ -5,3 +5,7 @@ dist/
 .env
 .DS_Store
 .shots/
+
+# Agent tooling caches, regenerated on demand.
+.atl/
+.impeccable/

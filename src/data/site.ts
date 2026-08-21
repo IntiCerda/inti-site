@@ -4,6 +4,24 @@ export type Lang = "en" | "es";
 // (service names, tech tags) stay single-valued and shared.
 type L = Record<Lang, string>;
 
+// Route shape lives next to the route table, because two copies of the "/es"
+// rule is how a canonical tag and a sitemap entry start disagreeing about the
+// same page. Base.astro, the sitemap and llms.txt all call these.
+export function localeHref(lang: Lang, href: string): string {
+  const clean = href.replace(/\/+$/, "") || "/";
+  const prefixed = lang === "es" ? (clean === "/" ? "/es" : `/es${clean}`) : clean;
+  return prefixed === "/" ? "/" : `${prefixed}/`;
+}
+
+// The same page in each language: "/es/work" strips back to "/work", which is
+// the key both locales are keyed by.
+export function basePath(lang: Lang, pathname: string): string {
+  const path = pathname.replace(/\/+$/, "") || "/";
+  return (lang === "es" ? path.replace(/^\/es(\/|$)/, "/") : path) || "/";
+}
+
+export const langs: Lang[] = ["en", "es"];
+
 export const nav: { href: string; label: L }[] = [
   { href: "/", label: { en: "Me", es: "Yo" } },
   { href: "/work/", label: { en: "Work", es: "Proyectos" } },
@@ -11,6 +29,28 @@ export const nav: { href: string; label: L }[] = [
   { href: "/architecture/", label: { en: "Architecture", es: "Arquitectura" } },
   { href: "/stack/", label: { en: "Stack", es: "Stack" } },
 ];
+
+// Identity as data, not as prose repeated across page copy. The JSON-LD and
+// llms.txt are both generated from this; changing a link here changes every
+// artifact that names it.
+export const person = {
+  name: "Inti Cerda",
+  role: { en: "Backend Engineer", es: "Ingeniero Backend" } as L,
+  summary: {
+    en: "Backend engineer in Coquimbo, Chile. Event-driven microservices, local LLM pipelines and full-stack product delivery, shipped to production.",
+    es: "Ingeniero backend en Coquimbo, Chile. Microservicios event-driven, pipelines de LLM locales y entrega de producto full-stack, llevados a producción.",
+  } as L,
+  email: "inti.cerda.r@gmail.com",
+  locality: "Coquimbo",
+  region: "Coquimbo",
+  country: "CL",
+  timezone: "UTC−4",
+  alumniOf: "Universidad Católica del Norte",
+  profiles: [
+    "https://www.linkedin.com/in/inti-cerda/",
+    "https://github.com/IntiCerda",
+  ],
+};
 
 // Written as what I have built and how I work, not as a services menu — the
 // audience here is a hiring team, not a buyer.

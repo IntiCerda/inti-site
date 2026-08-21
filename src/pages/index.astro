@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { personSchema } from "../data/seo";
 import { capabilities, stats, type Lang } from "../data/site";
 
 interface Props {
@@ -66,7 +67,12 @@ const copy = {
 const prefix = lang === "es" ? "/es" : "";
 ---
 
-<Base title={copy.title} description={copy.description} lang={lang}>
+<Base
+  title={copy.title}
+  description={copy.description}
+  lang={lang}
+  jsonLd={personSchema(Astro.site, lang)}
+>
   <section class="hero">
     <div class="panel hero__panel">
       <div>

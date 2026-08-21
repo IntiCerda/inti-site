@@ -9,27 +9,26 @@ import "@fontsource/shippori-mincho-b1/latin-800.css";
 import "@fontsource/jetbrains-mono/latin-400.css";
 import "@fontsource/jetbrains-mono/latin-700.css";
 import "../styles/components.css";
-import { nav, type Lang } from "../data/site";
+import { basePath, localeHref as hrefFor, nav, type Lang } from "../data/site";
 
 interface Props {
   title: string;
   description: string;
   lang?: Lang;
+  // Structured data for this page, built from data/site.ts by data/seo.ts.
+  // Pages that pass nothing simply emit no JSON-LD.
+  jsonLd?: unknown;
 }
 
-const { title, description, lang = "en" } = Astro.props;
+const { title, description, lang = "en", jsonLd } = Astro.props;
 
 // Trailing slash is normalised so "/work" and "/work/" both mark the tab.
 const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 
-// The same page in each language: "/es/work" strips to "/work", and each
-// locale link rebuilds from that shared base path.
-const basePath = (lang === "es" ? path.replace(/^\/es(\/|$)/, "/") : path) || "/";
-const localeHref = (target: Lang, href = basePath) => {
-  const clean = href.replace(/\/+$/, "") || "/";
-  const prefixed = target === "es" ? (clean === "/" ? "/es" : `/es${clean}`) : clean;
-  return prefixed === "/" ? "/" : `${prefixed}/`;
-};
+// The route rules themselves live in data/site.ts, shared with the sitemap and
+// llms.txt so the canonical tag and the sitemap entry cannot drift apart.
+const base = basePath(lang, path);
+const localeHref = (target: Lang, at = base) => hrefFor(target, at);
 
 const isActive = (href: string) =>
   (localeHref(lang, href).replace(/\/+$/, "") || "/") === path;
@@ -84,6 +83,19 @@ const ui = {
     <meta property="og:locale" content={lang === "es" ? "es_CL" : "en_US"} />
     <meta property="og:locale:alternate" content={lang === "es" ? "en_US" : "es_CL"} />
     <meta name="twitter:card" content="summary_large_image" />
+
+    {
+      /* Serialised in the build, never assembled in the browser: the whole
+         point is that a crawler reading raw HTML sees the same graph a
+         person does. */
+      jsonLd && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(jsonLd)}
+        />
+      )
+    }
 
     <style is:global>
       /*
