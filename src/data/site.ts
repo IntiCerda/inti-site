@@ -366,7 +366,6 @@ export const stack: {
       { label: "Prometheus", slug: "prometheus" },
       { label: "Grafana", slug: "grafana" },
       { label: "Playwright" },
-      { label: "GitHub Actions", slug: "githubactions" },
     ],
   },
 ];
