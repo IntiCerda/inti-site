@@ -12,7 +12,7 @@ import {
 } from "./carousel-kit.mjs";
 
 const OUT = "C:\\Users\\PC\\Downloads";
-const TOTAL = 7;
+const TOTAL = 8;
 const FOOT = "SEN DASHBOARD · FISCALÍA REGIONAL DE COQUIMBO";
 
 const page = (eyebrow, n, body) =>
@@ -55,7 +55,7 @@ const pages = [
       ["Dedup", "ventana de 36 horas en Redis"],
       ["Clasificación", "qwen2.5:7b local vía Ollama"],
       ["Enriquecimiento", "extrae entidades del texto"],
-      ["Consolidación", "agrupa lo que es un mismo hecho"],
+      ["Consolidación", "el LLM propone, un guardrail valida"],
       ["Dashboard", "Next.js 15 sobre PostgreSQL"],
     ],
     { y: 400, pitch: 106, highlight: 2 }
@@ -92,16 +92,33 @@ const pages = [
   ),
 
   page(
-    "LA ENTREGA",
+    "EL LÍMITE",
     6,
     `
-  ${headline(["Cinco servicios,", "un solo comando."], 260, 52, PAPER.ink)}
+  ${headline(["El modelo propone.", "El código decide."], 250, 50, PAPER.ink)}
+  ${sans("El consolidador es un LLM: mira los hechos recientes y propone que varios son el mismo. Esa propuesta no se aplica nunca directo.", 64, 430, 27, PAPER.ink, W - 200)}
+
+  <rect x="64" y="560" width="${W - 128}" height="210" fill="none" stroke="${PAPER.rule}" stroke-width="2"/>
+  <text x="110" y="622" font-family="${SANS}" font-size="24" fill="${PAPER.muted}">Antes de fusionar, un guardrail determinista exige:</text>
+  <text x="110" y="676" font-family="${MONO}" font-size="25" fill="${PAPER.ink}">1 · mismo tipo de delito, exacto</text>
+  <text x="110" y="722" font-family="${MONO}" font-size="25" fill="${PAPER.ink}">2 · similitud mínima entre TODOS los pares</text>
+
+  ${sans("Si un solo par no llega al umbral, se rechaza el grupo entero. La similitud es Jaccard sobre palabras clave: cinco líneas, sin modelo, auditables leyéndolas.", 64, 840, 27, PAPER.muted, W - 200)}
+  `
+  ),
+
+  page(
+    "LA ENTREGA",
+    7,
+    `
+  ${headline(["Seis servicios,", "un solo comando."], 260, 52, PAPER.ink)}
   ${[
     ["postgres", "PostgreSQL 16"],
     ["nextjs", "API REST y frontend"],
     ["redis", "caché y dedup"],
     ["ollama", "modelo local"],
     ["python-api", "scraping y clasificación"],
+    ["n8n", "orquesta la corrida completa"],
   ]
     .map(
       ([svc, desc], i) => `
@@ -116,7 +133,7 @@ const pages = [
 
   page(
     "CIERRE",
-    7,
+    8,
     `
   ${headline(["Entregado a un", "cliente de gobierno."], 340, 54, PAPER.ink)}
   <rect x="64" y="530" width="120" height="8" fill="${PAPER.accent}"/>
