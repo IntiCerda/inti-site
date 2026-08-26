@@ -1,0 +1,41 @@
+name: verify
+
+# `npm run verify` is `astro build && node scripts/check-seo.mjs`: build the
+# site, then assert that the sitemap, the hreflang pairs, the JSON-LD and
+# llms.txt still agree with the pages and with each other.
+#
+# That check is the point. The three artifacts are generated from one source so
+# they cannot drift, but a generator can be wrong silently — the page still
+# looks right while the sitemap lists a URL that was never built. This runs the
+# assertions on every push instead of whenever someone remembers.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # `playwright` is a devDependency for the landing-capture script, and its
+  # install hook pulls ~150 MB of browsers. The build never launches one.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install
+        # `ci` rather than `install`: it honours the lockfile exactly, so a
+        # green run here means the same tree that is committed.
+        run: npm ci
+
+      - name: Build and check the generated artifacts
+        run: npm run verify
