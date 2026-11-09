@@ -272,23 +272,6 @@ export const projects: {
     ],
   },
   {
-    name: "ai-job-search",
-    meta: { en: "2025", es: "2025" },
-    kind: { en: "Open source", es: "Open source" },
-    body: {
-      en: "A job-application framework that runs on your own machine, built on Claude Code: evaluates postings, tailors CVs, writes cover letters and preps interviews.",
-      es: "Un framework de postulación laboral que corre en tu propia máquina, construido sobre Claude Code: evalúa ofertas, adapta CVs, escribe cartas de presentación y prepara entrevistas.",
-    },
-    role: { en: "Author.", es: "Autor." },
-    tags: ["TypeScript", "Claude Code", "MCP"],
-    links: [
-      {
-        label: { en: "Source", es: "Código" },
-        href: "https://github.com/IntiCerda/ai-job-search",
-      },
-    ],
-  },
-  {
     name: "Script-Dev-W10-W11",
     meta: { en: "2024", es: "2024" },
     kind: { en: "Open source", es: "Open source" },
